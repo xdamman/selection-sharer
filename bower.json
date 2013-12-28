@@ -1,0 +1,28 @@
+{
+  "name": "selection-sharer",
+  "version": "0.0.3",
+  "homepage": "http://xdamman.github.io/selection-sharer",
+  "authors": [
+    "Xavier Damman <xdamman@gmail.com>"
+  ],
+  "description": "Medium like popover menu to share on Twitter or by email any text selected on the page.",
+  "main": "src/selection-sharer.js",
+  "keywords": [
+    "selection",
+    "share",
+    "popover",
+    "twitter",
+    "email"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "selection-sharer": "~0.0.3"
+  }
+}

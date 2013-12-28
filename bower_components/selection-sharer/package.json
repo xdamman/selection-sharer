@@ -1,0 +1,39 @@
+{
+  "name": "share-selection",
+  "version": "0.0.3",
+  "description": "Medium like popover menu to share on Twitter or by email any text selected on the page",
+  "main": "src/share-selection.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/xdamman/share-selection.git"
+  },
+  "scripts": {
+    "install": "node_modules/grunt-cli/bin/grunt"
+  },
+  "keywords": [
+    "share",
+    "selection",
+    "selected",
+    "medium",
+    "twitter",
+    "email",
+    "popover",
+    "frontend",
+    "jquery"
+  ],
+  "author": "Xavier Damman (@xdamman)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xdamman/share-selection/issues"
+  },
+  "homepage": "https://github.com/xdamman/share-selection",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-cli": "~0.1.11"
+  }
+}

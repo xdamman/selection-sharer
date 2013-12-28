@@ -1,9 +1,10 @@
+var banner = '/* @author: Xavier Damman (@xdamman) - http://github.com/xdamman/share-selection - @license: MIT */';
 module.exports = function(grunt) {
   grunt.initConfig({
     cssmin: {
       dist: {
         options: {
-          banner: '/* @author: Xavier Damman (@xdamman) - http://github.com/xdamman/share-selection - @license: MIT */'
+          banner: banner 
         },
         files: {
           'dist/share-selection.css': ['src/*.css']
@@ -13,7 +14,7 @@ module.exports = function(grunt) {
     uglify: {
       dist: {
         options: {
-
+          banner: banner
         },
         files: {
           'dist/share-selection.js': ['src/*.js']

@@ -28,13 +28,13 @@ That's it.
 
 ## Bookmarklet version
 
-Drag and drop this link to your bookmark bar: <a href="l=document.createElement('link');l.rel="stylesheet";l.src="https://raw.github.com/xdamman/share-selection/master/src/share-selection.css";document.head.appendChild(l);s=document.createElement('script');s.src="https://raw.github.com/xdamman/share-selection/master/src/share-selection.js";document.body.appendChild(s);">“ShareSelection”</a>
+Drag and drop this link to your bookmark bar: <a href="javascript:(function(){l=document.createElement('link');l.rel="stylesheet";l.src="https://raw.github.com/xdamman/share-selection/master/src/share-selection.css";document.head.appendChild(l);s=document.createElement('script');s.src="https://raw.github.com/xdamman/share-selection/master/src/share-selection.js";document.body.appendChild(s)})()">“ShareSelection”</a>
 
 Then click on it to activate the "Share Selection Popover" on any web page.
 
 Code (for reference):
 
-    l=document.createElement('link');l.rel="stylesheet";l.src="https://raw.github.com/xdamman/share-selection/master/dist/share-selection.css";document.head.appendChild(l);s=document.createElement('script');s.src="https://raw.github.com/xdamman/share-selection/master/dist/share-selection.js";document.body.appendChild(s);
+    javascript:(function(){l=document.createElement('link');l.rel="stylesheet";l.src="https://raw.github.com/xdamman/share-selection/master/src/share-selection.css";document.head.appendChild(l);s=document.createElement('script');s.src="https://raw.github.com/xdamman/share-selection/master/src/share-selection.js";document.body.appendChild(s)})()
 
 ## Build
 

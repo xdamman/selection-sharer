@@ -8,33 +8,38 @@ Medium like popover menu to share on Twitter or by email any text selected on th
 
 This script requires jQuery so make sure you have it loaded on your page.
 
-Load the stylesheet in the `<head>` of your page
+Add the stylesheet in the `<head>` of your page:
 
-    <link rel="stylesheet" href="dist/share-selection.css" />
+    <link rel="stylesheet" href="dist/selection-sharer.css" />
     
-And the Javascript at the bottom of your page near the closing `</body>` tag
+And add the Javascript at the bottom of your page near the closing `</body>` tag:
 
-    <script src="dist/share-selection.js" async></script>
+    <script src="dist/selection-sharer.js"></script>
+    <script>
+    var sharer = new SelectionSharer('p'); // bind mouseup event to all <p> elements
+	</script>
 
-Or if you are using [requirejs](http://requirejs.org), you can simply use `require(["src/share-selection"]);`
+Or if you are using [requirejs](http://requirejs.org), you can simply do:
+
+
+    require(["dist/selection-sharer"], function(SelectionSharer) {
+      var sharer = new SelectionSharer();
+      selectionSharer.setElements('p'); // bind mouseup event to all <p> elements
+    });
+
 
 That's it. 
 
 ### Notes 
 
-- Only `<p>` paragraphs are taken into consideration
 - Images are included inline in the CSS as SVG (perfect for Retina displays and loading time)
 - Total size gzipped minified: 3.5K (equally split between css and javascript)
 
 ## Bookmarklet version
 
-Drag and drop this link to your bookmark bar: <a href="javascript:(function(){l=document.createElement('link');l.rel="stylesheet";l.src="https://raw.github.com/xdamman/share-selection/master/src/share-selection.css";document.head.appendChild(l);s=document.createElement('script');s.src="https://raw.github.com/xdamman/share-selection/master/src/share-selection.js";document.body.appendChild(s)})()">“ShareSelection”</a>
+Add a new bookmark to your bookmark bar, edit its url and copy paste the following code:
 
-Then click on it to activate the "Share Selection Popover" on any web page.
-
-Code (for reference):
-
-    javascript:(function(){l=document.createElement('link');l.rel="stylesheet";l.src="https://raw.github.com/xdamman/share-selection/master/src/share-selection.css";document.head.appendChild(l);s=document.createElement('script');s.src="https://raw.github.com/xdamman/share-selection/master/src/share-selection.js";document.body.appendChild(s)})()
+    javascript:(function(){var s=document.createElement('script');s.src="https://raw.github.com/xdamman/share-selection/master/dist/bookmarklet.js";document.body.appendChild(s);})()
 
 ## Build
 

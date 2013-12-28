@@ -1,4 +1,4 @@
-var banner = '/* @author: Xavier Damman (@xdamman) - http://github.com/xdamman/share-selection - @license: MIT */';
+var banner = '/* @author: Xavier Damman (@xdamman) - http://github.com/xdamman/selection-sharer - @license: MIT */';
 module.exports = function(grunt) {
   grunt.initConfig({
     cssmin: {
@@ -7,7 +7,7 @@ module.exports = function(grunt) {
           banner: banner 
         },
         files: {
-          'dist/share-selection.css': ['src/*.css']
+          'dist/selection-sharer.css': ['src/*.css']
         }
       }
     },
@@ -17,7 +17,8 @@ module.exports = function(grunt) {
           banner: banner
         },
         files: {
-          'dist/share-selection.js': ['src/*.js']
+          'dist/selection-sharer.js': ['src/selection-sharer.js'],
+          'dist/bookmarklet.js': ['src/bookmarklet.js']
         }
       }
     }

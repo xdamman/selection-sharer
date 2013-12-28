@@ -11,11 +11,13 @@
 
 (function($) {
 
-  var selectionSharer = function() {
+  var SelectionSharer = function(options) {
 
     var self = this;
 
-    this.$elements = $('p');
+    options = options || {};
+    if(typeof options == 'string')
+        options = { elements: options };
 
     this.sel = null;
     this.textSelection='';
@@ -81,16 +83,26 @@
       return direction;
     }
 
-    var showPopOver = function(e) {
+    this.show = function(e) {
       setTimeout(function() {
         var sel = window.getSelection(); 
         var selection = getSelectionText();
         if(!sel.isCollapsed && selection.length>10) {
-          ev = e;
           var range = sel.getRangeAt(0);
           var topOffset = range.getBoundingClientRect().top - 5;
           var top = topOffset + window.scrollY - self.$popover.height();
-          var left = e.pageX;
+          var left = 0;
+          if(e) {
+            left = e.pageX;
+          }
+          else {
+            var obj = sel.anchorNode.parentNode;
+            left += obj.offsetWidth / 2;
+            do {
+              left += obj.offsetLeft;
+            }
+            while(obj = obj.offsetParent);
+          }
           switch(selectionDirection(sel)) {
             case 'forward':
               left -= self.$popover.width();
@@ -109,7 +121,7 @@
       }, 10);
     }
 
-    var hidePopOver = function(e) {
+    this.hide = function(e) {
       self.$popover.hide();
     };
 
@@ -134,7 +146,7 @@
       var left = (screen.width/2)-(w/2);
       var top = (screen.height/2)-(h/2)-100;
       window.open(url, "share_twitter", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+',       top='+top+', left='+left);
-      hidePopOver();
+      self.hide();
       return false;
     };
 
@@ -144,35 +156,48 @@
       email.subject = encodeURIComponent("Quote from "+document.title);
       email.body = encodeURIComponent("“"+text+"”")+"%0D%0A%0D%0AFrom: "+document.title+"%0D%0A"+window.location.href;
       $(this).attr("href","mailto:?subject="+email.subject+"&body="+email.body);
-      hidePopOver();
+      self.hide();
       return true;
     };
 
-    var popoverHTML =  '<div id="shareSelectionPopover" style="position:absolute;">'
-                     + '  <div id="shareSelectionPopover-inner">'
-                     + '    <ul>'
-                     + '      <li><a class="tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
-                     + '      <li><a class="email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="#FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
-                     + '    </ul>'
-                     + '  </div>'
-                     + '  <div class="shareSelectionPopover-clip"><span class="shareSelectionPopover-arrow"></span></div>'
-                     + '</div>';
+    this.render = function() {
+      var popoverHTML =  '<div id="shareSelectionPopover" style="position:absolute;">'
+                       + '  <div id="shareSelectionPopover-inner">'
+                       + '    <ul>'
+                       + '      <li><a class="tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
+                       + '      <li><a class="email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="#FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
+                       + '    </ul>'
+                       + '  </div>'
+                       + '  <div class="shareSelectionPopover-clip"><span class="shareSelectionPopover-arrow"></span></div>'
+                       + '</div>';
 
-    self.$popover = $(popoverHTML);
-    self.$popover.find('a.tweet').click(shareTwitter);
-    self.$popover.find('a.email').click(shareEmail);
+      self.$popover = $(popoverHTML);
+      self.$popover.find('a.tweet').click(shareTwitter);
+      self.$popover.find('a.email').click(shareEmail);
 
-    $('body').append($popover); 
-    self.$elements.mouseup(showPopOver).mousedown(hidePopOver);
+      $('body').append(self.$popover); 
+    };
+
+    this.setElements = function(elements) {
+      if(typeof elements == 'string') elements = $(elements);
+      self.$elements = elements instanceof $ ? elements : $(elements);
+      self.$elements.mouseup(self.show).mousedown(self.hide);
+    };
+
+    this.render();
+
+    if(options.elements) {
+      this.setElements(options.elements);
+    }
 
   };
 
   // For AMD / requirejs
   if(typeof define == 'function') {
-    define(selectionSharer);
+    define(function() { return SelectionSharer; });
   }
   else {
-    selectionSharer();
+    window.SelectionSharer = SelectionSharer;
   }
   
 })(jQuery);

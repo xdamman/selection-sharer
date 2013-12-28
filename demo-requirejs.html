@@ -18,7 +18,7 @@
   }
   </style>
 
-  <link rel="stylesheet" href="dist/share-selection.css" />
+  <link rel="stylesheet" href="dist/selection-sharer.css" />
   
 </head>
   
@@ -31,7 +31,10 @@
   </div>
 
   <script>
-  require(["dist/share-selection"]);
+  require(["dist/selection-sharer"], function(SelectionSharer) {
+    var sharer = new SelectionSharer();
+    sharer.setElements('p');
+  });
   </script>
 
 </body>

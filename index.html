@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-
+    <link rel="stylesheet" href="https://raw.github.com/xdamman/share-selection/master/dist/selection-sharer.css" />
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -34,6 +34,8 @@
 <p>Medium like popover menu to share on Twitter or by email any text selected on the page.</p>
 
 <p><img src="http://f.cl.ly/items/1i0v3l2b3P342D2b302J/share-selection.png" alt=""></p>
+
+<b>Try it on this page!</b>
 
 <h2>
 <a name="bookmarklet-version" class="anchor" href="#bookmarklet-version"><span class="octicon octicon-link"></span></a>Bookmarklet version</h2>
@@ -131,5 +133,9 @@ var sharer = new SelectionSharer('p'); // bind mouseup event to all &lt;p&gt; el
             } catch(err) {}
           </script>
 
+  <script src="https://raw.github.com/xdamman/share-selection/master/dist/selection-sharer.js"></script>
+  <script>
+  var sharer = new SelectionSharer('p'); // bind mouseup event to all <p> elements
+  </script>
   </body>
 </html>

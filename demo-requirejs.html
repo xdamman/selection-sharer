@@ -4,6 +4,7 @@
 <head>
   <title>Share Selection Demo</title>
   <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js"></script>
   <style>
   body {
     font-family:"Helvetica Neue", Helvetica;
@@ -29,8 +30,10 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium eius iusto placeat ex repellat sit cumque consequatur corporis? Minus harum enim odit aperiam ut recusandae veritatis architecto eum laudantium autem.</p>
   </div>
 
-  <script src="dist/share-selection.js" async></script>
-  
+  <script>
+  require(["dist/share-selection"]);
+  </script>
+
 </body>
 </html>
 

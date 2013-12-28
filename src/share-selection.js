@@ -9,15 +9,44 @@
  * MIT License
  */
 
-(function() {
+(function($) {
 
   var selectionSharer = function() {
 
     var self = this;
 
+    this.$elements = $('p');
+
     this.sel = null;
     this.textSelection='';
     this.htmlSelection='';
+
+    var getRelatedTwitterAccounts = function() {
+      var usernames = [];
+
+      var creator = $('meta[name="twitter:creator"]').attr("content") || $('meta[name="twitter:creator"]').attr("value");
+      if(creator) usernames.push(creator);
+
+
+      // We scrape the page to find a link to http://twitter.com/username
+      var anchors = document.getElementsByTagName('a');
+      for(var i=0, len=anchors.length;i<len;i++) { 
+        if(anchors[i].attributes.href && typeof anchors[i].attributes.href.value == 'string') {
+          var matches = anchors[i].attributes.href.value.match(/^https?:\/\/twitter\.com\/([a-z0-9_]{1,20})/i) 
+          if(matches && matches.length > 1 && ['widgets','intent'].indexOf(matches[1])==-1)
+            usernames.push(matches[1]); 
+        } 
+      }
+
+      if(usernames.length > 0)
+        return usernames.join(',');
+      else
+        return '';
+    }
+
+    this.viaTwitterAccount = $('meta[name="twitter:site"]').attr("content") || $('meta[name="twitter:site"]').attr("value") || "";
+    this.viaTwitterAccount = this.viaTwitterAccount.replace(/@/,'');
+    this.relatedTwitterAccounts = getRelatedTwitterAccounts();
 
     var getSelectionText = function() {
         var html = "", text = "";
@@ -94,9 +123,13 @@
 
     var shareTwitter = function(e) {
       e.preventDefault(); 
-      var relatedTwitterUser = 'xdamman';
-      var text = "“"+smart_truncate(self.textSelection.trim(), 117)+"”";
-      var url = 'http://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&related='+relatedTwitterUser+'&url='+encodeURIComponent(window.location.href);
+      var text = "“"+smart_truncate(self.textSelection.trim(), 114)+"”";
+      var url = 'http://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&related='+self.relatedTwitterAccounts+'&url='+encodeURIComponent(window.location.href);
+
+      // We only show the via @twitter:site if we have enough room
+      if(self.viaTwitterAccount && text.length < (120-6-self.viaTwitterAccount.length))
+        url += '&via='+self.viaTwitterAccount;
+
       var w = 640, h=440;
       var left = (screen.width/2)-(w/2);
       var top = (screen.height/2)-(h/2)-100;
@@ -108,7 +141,7 @@
     var shareEmail = function(e) {
       var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
       var email = {};
-      email.subject = encodeURIComponent(document.title);
+      email.subject = encodeURIComponent("Quote from "+document.title);
       email.body = encodeURIComponent("“"+text+"”")+"%0D%0A%0D%0AFrom: "+document.title+"%0D%0A"+window.location.href;
       $(this).attr("href","mailto:?subject="+email.subject+"&body="+email.body);
       hidePopOver();
@@ -118,7 +151,7 @@
     var popoverHTML =  '<div id="shareSelectionPopover" style="position:absolute;">'
                      + '  <div id="shareSelectionPopover-inner">'
                      + '    <ul>'
-                     + '      <li><a class="tweet" href="" title="Share this selection with Twitter" target="_blank">Tweet</a></li>'
+                     + '      <li><a class="tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
                      + '      <li><a class="email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="#FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
                      + '    </ul>'
                      + '  </div>'
@@ -130,7 +163,7 @@
     self.$popover.find('a.email').click(shareEmail);
 
     $('body').append($popover); 
-    $('p').mouseup(showPopOver).mousedown(hidePopOver);
+    self.$elements.mouseup(showPopOver).mousedown(hidePopOver);
 
   };
 
@@ -142,4 +175,4 @@
     selectionSharer();
   }
   
-})();
+})(jQuery);

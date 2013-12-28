@@ -1,10 +1,17 @@
-# share-selection
+# selection-sharer
 
 Medium like popover menu to share on Twitter or by email any text selected on the page.
 
 ![](http://f.cl.ly/items/1i0v3l2b3P342D2b302J/share-selection.png)
 
-## How to use
+
+## Bookmarklet version
+
+Add a new bookmark to your bookmark bar, edit its url and copy paste the following code:
+
+    javascript:(function(){var s=document.createElement('script');s.src="https://raw.github.com/xdamman/share-selection/master/dist/bookmarklet.js";document.body.appendChild(s);})()
+    
+## How to use on your site
 
 This script requires jQuery so make sure you have it loaded on your page.
 
@@ -12,7 +19,7 @@ Add the stylesheet in the `<head>` of your page:
 
     <link rel="stylesheet" href="dist/selection-sharer.css" />
     
-And add the Javascript at the bottom of your page near the closing `</body>` tag:
+and add the Javascript at the bottom of your page near the closing `</body>` tag:
 
     <script src="dist/selection-sharer.js"></script>
     <script>
@@ -35,11 +42,6 @@ That's it.
 - Images are included inline in the CSS as SVG (perfect for Retina displays and loading time)
 - Total size gzipped minified: 3.5K (equally split between css and javascript)
 
-## Bookmarklet version
-
-Add a new bookmark to your bookmark bar, edit its url and copy paste the following code:
-
-    javascript:(function(){var s=document.createElement('script');s.src="https://raw.github.com/xdamman/share-selection/master/dist/bookmarklet.js";document.body.appendChild(s);})()
 
 ## Build
 
@@ -54,10 +56,10 @@ This is still early days so there is still a lot to do and I welcome contributio
 
 TODO:
 
-- Make a Browser extension version
+- Make a browser extension
 - Make a Wordpress plugin
 - Add support for different themes
 - Add tests
-- Tests across multiple browsers (currently only tests on Chrome, Safari, Firefox on a Mac)
+- Tests across multiple browsers (currently only tested on Chrome, Safari, Firefox on a Mac)
 - Remove dependency on jQuery
-- Make the CSS more robust for collisions
+- Make the CSS more robust against collisions

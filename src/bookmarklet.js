@@ -16,7 +16,7 @@
 	}
 
 	var runScript = function() {
-		var sharer = new selectionSharer();
+		var sharer = new SelectionSharer();
 		sharer.show();
 		sharer.setElements('p');
 	}

@@ -9,7 +9,7 @@ Medium like popover menu to share on Twitter or by email any text selected on th
 
 Add a new bookmark to your bookmark bar, edit its url and copy paste the following code:
 
-    javascript:(function(){var s=document.createElement('script');s.src="https://xdamman.github.io/selection-sharer/lib/dist/bookmarklet.js";document.body.appendChild(s);})()
+    javascript:(function(){var s=document.createElement('script');s.src="//xdamman.github.io/selection-sharer/lib/selection-sharer/dist/bookmarklet.js";document.body.appendChild(s);})()
     
 ## How to use on your site
 

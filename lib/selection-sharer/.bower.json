@@ -9,6 +9,6 @@
     "commit": "811a24474f84768e6271ce0f82c9b1ee639612e2"
   },
   "_source": "git://github.com/xdamman/selection-sharer.git",
-  "_target": "~0.0.3",
+  "_target": "*",
   "_originalSource": "selection-sharer"
 }

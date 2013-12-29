@@ -23,6 +23,6 @@
     "tests"
   ],
   "dependencies": {
-    "selection-sharer": "~0.0.3"
+    "selection-sharer": "*"
   }
 }

@@ -10,6 +10,5 @@
   },
   "_source": "git://github.com/xdamman/selection-sharer.git",
   "_target": "~0.0.3",
-  "_originalSource": "selection-sharer",
-  "_direct": true
+  "_originalSource": "selection-sharer"
 }

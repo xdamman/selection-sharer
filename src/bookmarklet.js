@@ -1,16 +1,16 @@
 (function() {
 
-	var baseUrl = 'http://localhost:8081';
+	var baseUrl = '//xdamman.github.com/selection-sharer/lib/selection-sharer/dist';
 
 	// Loading CSS
 	var l = document.createElement('link');
 	l.rel = 'stylesheet';
-	l.href = baseUrl+"/src/share-selection.css";
+	l.href = baseUrl+"/selection-sharer.css";
 	document.head.appendChild(l);
 
 	var loadSelectionSharer = function() {
 		var s = document.createElement('script');
-		s.src = baseUrl+"/src/share-selection.js";
+		s.src = baseUrl+"/selection-sharer.js";
 		s.onload = runScript;
 		document.body.appendChild(s);
 	}

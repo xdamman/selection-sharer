@@ -9,7 +9,7 @@ Medium like popover menu to share on Twitter or by email any text selected on th
 
 Add a new bookmark to your bookmark bar, edit its url and copy paste the following code:
 
-    javascript:(function(){var s=document.createElement('script');s.src="https://raw.github.com/xdamman/share-selection/master/dist/bookmarklet.js";document.body.appendChild(s);})()
+    javascript:(function(){var s=document.createElement('script');s.src="https://xdamman.github.io/selection-sharer/lib/dist/bookmarklet.js";document.body.appendChild(s);})()
     
 ## How to use on your site
 
@@ -39,11 +39,11 @@ That's it.
 
 ### Notes 
 
-- Images are included inline in the CSS as SVG (perfect for Retina displays and loading time)
+- Images are included inline in the CSS as SVG (perfect for Retina displays, loading time and to easily create new color schemes)
 - Total size gzipped minified: 3.5K (equally split between css and javascript)
+- Only works on desktop (for now)
 
-
-## Build
+## Building
 
 To recompile the minified versions of the css and javascript in the `dist/` directory, simply run:
 

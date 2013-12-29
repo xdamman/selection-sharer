@@ -43,7 +43,7 @@
 
 <p>Add a new bookmark to your bookmark bar, edit its url and copy paste the following code:</p>
 
-<pre><code>javascript:(function(){var s=document.createElement('script');s.src="https://xdamman.github.io/selection-sharer/lib/dist/bookmarklet.js";document.body.appendChild(s);})()
+<pre><code>javascript:(function(){var s=document.createElement('script');s.src="//xdamman.github.io/selection-sharer/lib/selection-sharer/dist/bookmarklet.js";document.body.appendChild(s);})()
 </code></pre>
 
 <h2>
@@ -78,8 +78,9 @@ var sharer = new SelectionSharer('p'); // bind mouseup event to all &lt;p&gt; el
 <a name="notes" class="anchor" href="#notes"><span class="octicon octicon-link"></span></a>Notes</h3>
 
 <ul>
-<li>Images are included inline in the CSS as SVG (perfect for Retina displays and loading time)</li>
+<li>Images are included inline in the CSS as SVG (perfect for Retina displays, loading time and to easily create new color schemes)</li>
 <li>Total size gzipped minified: 3.5K (equally split between css and javascript)</li>
+<li>Only works on desktop (for now)</li>
 </ul><h2>
 <a name="build" class="anchor" href="#build"><span class="octicon octicon-link"></span></a>Build</h2>
 

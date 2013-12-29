@@ -1,17 +1,14 @@
 {
   "name": "share-selection",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Medium like popover menu to share on Twitter or by email any text selected on the page",
   "main": "src/share-selection.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "node_modules/grunt-cli/bin/grunt"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/xdamman/share-selection.git"
-  },
-  "scripts": {
-    "install": "node_modules/grunt-cli/bin/grunt"
   },
   "keywords": [
     "share",

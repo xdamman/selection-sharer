@@ -24,22 +24,16 @@
     this.htmlSelection='';
 
 
-    this.getSelectionText = function() {
+    this.getSelectionText = function(sel) {
         var html = "", text = "";
-        if (typeof window.getSelection != "undefined") {
-            var sel = window.getSelection();
-            if (sel.rangeCount) {
-                var container = document.createElement("div");
-                for (var i = 0, len = sel.rangeCount; i < len; ++i) {
-                    container.appendChild(sel.getRangeAt(i).cloneContents());
-                }
-                text = container.innerText;
-                html = container.innerHTML
+        var sel = sel || window.getSelection();
+        if (sel.rangeCount) {
+            var container = document.createElement("div");
+            for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                container.appendChild(sel.getRangeAt(i).cloneContents());
             }
-        } else if (typeof document.selection != "undefined") {
-            if (document.selection.type == "Text") {
-                text = document.selection.createRange().text;
-            }
+            text = container.innerText;
+            html = container.innerHTML
         }
         self.textSelection = text;
         self.htmlSelection = html || text;
@@ -57,11 +51,50 @@
       return direction;
     };
 
+    this.showPopunder = function() {
+      var sel = window.getSelection(); 
+      var selection = self.getSelectionText(sel);
+      if(!sel.isCollapsed && selection.length>10 && selection.match(/ /)) {
+
+        if(self.$popunder.hasClass("fixed"))
+          return self.$popunder[0].style.bottom = 0;
+
+        var range = sel.getRangeAt(0);
+        var node = range.endContainer.parentNode;
+
+        if(node == self.lastEndContainerNode) {
+          self.$popunder.removeClass("hidden");
+          self.$popunder[0].scrollIntoViewIfNeeded(false);
+          return;
+        }
+        else {
+          var delay = (self.$popunder.hasClass("hidden")) ? 0 : 500;
+          self.$popunder.addClass("hidden");
+          setTimeout(function() {
+            self.lastEndContainerNode = node;
+            $(node).after(self.$popunder);
+            setTimeout(function() {
+              self.$popunder.removeClass("hidden");
+              setTimeout(function() {
+                self.$popunder[0].scrollIntoViewIfNeeded(false); // We should animate this
+              }, 100);
+            }, 100);
+          }, delay); 
+        }
+      }
+      else {
+        if(self.$popunder.hasClass("fixed"))
+          return self.$popunder[0].style.bottom = '-50px';
+
+        self.$popunder.addClass("hidden");
+      }
+    };
+
     this.show = function(e) {
       setTimeout(function() {
         var sel = window.getSelection(); 
-        var selection = self.getSelectionText();
-        if(!sel.isCollapsed && selection.length>10) {
+        var selection = self.getSelectionText(sel);
+        if(!sel.isCollapsed && selection.length>10 && selection.match(/ /)) {
           var range = sel.getRangeAt(0);
           var topOffset = range.getBoundingClientRect().top - 5;
           var top = topOffset + window.scrollY - self.$popover.height();
@@ -168,7 +201,7 @@
     };
 
     this.render = function() {
-      var popoverHTML =  '<div id="shareSelectionPopover" style="position:absolute;">'
+      var popoverHTML =  '<div class="selectionSharer" id="shareSelectionPopover" style="position:absolute;">'
                        + '  <div id="shareSelectionPopover-inner">'
                        + '    <ul>'
                        + '      <li><a class="tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
@@ -178,17 +211,49 @@
                        + '  <div class="shareSelectionPopover-clip"><span class="shareSelectionPopover-arrow"></span></div>'
                        + '</div>';
 
+      var popunderHTML = '<div class="selectionSharer" id="shareSelectionPopunder">'
+                       + '  <div id="shareSelectionPopunder-inner">'
+                       + '    <ul>'
+                       + '      <li><label>Share this selection</label></li>'
+                       + '      <li><a class="tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
+                       + '      <li><a class="email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="#FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
+                       + '    </ul>'
+                       + '  </div>'
+                       + '</div>';
+
       self.$popover = $(popoverHTML);
       self.$popover.find('a.tweet').click(self.shareTwitter);
       self.$popover.find('a.email').click(self.shareEmail);
 
-      $('body').append(self.$popover); 
+      $('body').append(self.$popover);
+
+      self.$popunder = $(popunderHTML);
+      self.$popunder.find('a.tweet').click(self.shareTwitter);
+      self.$popunder.find('a.email').click(self.shareEmail);
+      $('body').append(self.$popunder);
     };
 
     this.setElements = function(elements) {
       if(typeof elements == 'string') elements = $(elements);
       self.$elements = elements instanceof $ ? elements : $(elements);
       self.$elements.mouseup(self.show).mousedown(self.hide);
+
+      self.$elements.bind('touchstart', function(e) {
+        self.isMobile = true;
+      });
+
+      document.onselectionchange = self.selectionChanged;
+    };
+
+    this.selectionChanged = function(e) {
+      if(!self.isMobile) return;
+
+      if(self.lastSelectionChanged) {
+        clearTimeout(self.lastSelectionChanged);
+      }
+      self.lastSelectionChanged = setTimeout(function() {
+        self.showPopunder(e);
+      }, 300);
     };
 
     this.render();

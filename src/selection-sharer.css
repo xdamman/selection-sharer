@@ -9,7 +9,7 @@
  * MIT License
  */
 
-@keyframes shareSelectionPopover-animation { 
+@keyframes selectionSharerPopover-animation { 
   0%{ 
   transform:matrix(0.97,0,0,1,0,12); 
   filter:alpha(opacity=0); 
@@ -37,7 +37,7 @@
   } 
 } 
 
-#shareSelectionPopover {
+#selectionSharerPopover {
   display: none;
   position: absolute;
   top: -100px;
@@ -45,7 +45,7 @@
   z-index: 1010;
 }
 
-#shareSelectionPopover:after {
+#selectionSharerPopover:after {
   content: '';
   display: block;
   position: absolute;
@@ -60,13 +60,13 @@
   box-shadow: 0 0 2px #262625;
 }
 
-#shareSelectionPopover.anim {
+#selectionSharerPopover.anim {
   transition: top .075s ease-out;
-  animation: shareSelectionPopover-animation 180ms forwards linear;  
-  -webkit-animation: shareSelectionPopover-animation 180ms forwards linear;  
+  animation: selectionSharerPopover-animation 180ms forwards linear;  
+  -webkit-animation: selectionSharerPopover-animation 180ms forwards linear;  
 }
 
-#shareSelectionPopover-inner {
+#selectionSharerPopover-inner {
   position:relative;
   overflow: hidden;
   -webkit-border-radius: 5px;
@@ -78,7 +78,7 @@
   background-repeat: repeat-x;
 }
 
-#shareSelectionPopover .shareSelectionPopover-clip {
+#selectionSharerPopover .selectionSharerPopover-clip {
   position: absolute;
   bottom: -11px;
   display: block;
@@ -90,7 +90,7 @@
   line-height: 24px;
 }
 
-#shareSelectionPopover .shareSelectionPopover-arrow {
+#selectionSharerPopover .selectionSharerPopover-arrow {
   display: block;
   width: 20px;
   height: 20px;
@@ -139,12 +139,13 @@
   background-position: 0px 4px;
 }
 
-#shareSelectionPopunder {
+#selectionSharerPopunder {
   transition: height 0.5s ease-in-out;
   height:50px;
+  margin-bottom: 20px;
 }
 
-#shareSelectionPopunder.fixed {
+#selectionSharerPopunder.fixed {
   transition: bottom 0.5s ease-in-out;
   width: 100%;
   position: fixed;
@@ -152,11 +153,11 @@
   bottom:-50px;
 }
 
-#shareSelectionPopunder.hidden, .hidden #shareSelectionPopunder-inner {
+#selectionSharerPopunder.hidden, .hidden #selectionSharerPopunder-inner {
   height: 0px;
 }
 
-#shareSelectionPopunder-inner {
+#selectionSharerPopunder-inner {
   transition: height 0.5s ease-in-out;
   background: #ccc;
   border: none;
@@ -169,32 +170,33 @@
   overflow: hidden;
 }
 
-#shareSelectionPopunder ul {
+#selectionSharerPopunder ul {
   display: block;
   overflow: hidden;
   float:left;
-  width: 300px;
+  width: 320px;
   margin: 5px 0px;
 }
 
-#shareSelectionPopunder ul li {
+#selectionSharerPopunder ul li {
   padding: 5px 15px;
   overflow: hidden;
 }
 
-#shareSelectionPopunder label {
+#selectionSharerPopunder label {
   color: white; 
   font-weight: 300;
   line-height: 28px;
+  margin-right: 30px;
 }
 
-#shareSelectionPopunder a {
+#selectionSharerPopunder a {
   width: 30px;
   height: 30px;
   background-size: 30px;
 }
 
-#shareSelectionPopunder a.tweet {
+#selectionSharerPopunder a.tweet {
   background-position: 0px 2px;
 }
 

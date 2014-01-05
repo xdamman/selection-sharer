@@ -201,18 +201,18 @@
     };
 
     this.render = function() {
-      var popoverHTML =  '<div class="selectionSharer" id="shareSelectionPopover" style="position:absolute;">'
-                       + '  <div id="shareSelectionPopover-inner">'
+      var popoverHTML =  '<div class="selectionSharer" id="selectionSharerPopover" style="position:absolute;">'
+                       + '  <div id="selectionSharerPopover-inner">'
                        + '    <ul>'
                        + '      <li><a class="tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
                        + '      <li><a class="email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="#FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
                        + '    </ul>'
                        + '  </div>'
-                       + '  <div class="shareSelectionPopover-clip"><span class="shareSelectionPopover-arrow"></span></div>'
+                       + '  <div class="selectionSharerPopover-clip"><span class="selectionSharerPopover-arrow"></span></div>'
                        + '</div>';
 
-      var popunderHTML = '<div class="selectionSharer" id="shareSelectionPopunder">'
-                       + '  <div id="shareSelectionPopunder-inner">'
+      var popunderHTML = '<div class="selectionSharer" id="selectionSharerPopunder">'
+                       + '  <div id="selectionSharerPopunder-inner">'
                        + '    <ul>'
                        + '      <li><label>Share this selection</label></li>'
                        + '      <li><a class="tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'

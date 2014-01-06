@@ -211,7 +211,7 @@
                        + '  <div class="selectionSharerPopover-clip"><span class="selectionSharerPopover-arrow"></span></div>'
                        + '</div>';
 
-      var popunderHTML = '<div class="selectionSharer" id="selectionSharerPopunder">'
+      var popunderHTML = '<div class="selectionSharer hidden" id="selectionSharerPopunder">'
                        + '  <div id="selectionSharerPopunder-inner">'
                        + '    <ul>'
                        + '      <li><label>Share this selection</label></li>'

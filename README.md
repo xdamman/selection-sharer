@@ -2,7 +2,7 @@
 
 Medium like popover menu to share on Twitter or by email any text selected on the page with support for mobile devices (with a popunder).
 
-![selection sharer screenshot](http://f.cl.ly/items/2a1U1U1Z3U230m0H2J0W/selection-sharer-screenshot.png)
+![selection sharer screenshot](http://f.cl.ly/items/282u1E2K0C2K0i1W3P0G/selection-sharer-screenshot.png)
     
 ## How to use on your site
 

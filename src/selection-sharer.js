@@ -266,7 +266,15 @@
 
   // For AMD / requirejs
   if(typeof define == 'function') {
-    define(function() { return SelectionSharer; });
+    define(function() { 
+      SelectionSharer.load = function (name, req, onLoad, config) {
+        var sharer = new SelectionSharer();
+        sharer.setElements('p');
+        onLoad();
+      };
+      return SelectionSharer; 
+    });
+
   }
   else {
     window.SelectionSharer = SelectionSharer;

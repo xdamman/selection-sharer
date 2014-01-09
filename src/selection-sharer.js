@@ -52,42 +52,61 @@
     };
 
     this.showPopunder = function() {
+      self.popunder = self.popunder || document.getElementById('selectionSharerPopunder'); 
+
       var sel = window.getSelection(); 
       var selection = self.getSelectionText(sel);
-      if(!sel.isCollapsed && selection.length>10 && selection.match(/ /)) {
 
-        if(self.$popunder.hasClass("fixed"))
-          return self.$popunder[0].style.bottom = 0;
+      if(sel.isCollapsed || selection.length < 10 || !selection.match(/ /))
+        return self.hidePopunder();
 
-        var range = sel.getRangeAt(0);
-        var node = range.endContainer.parentNode;
+      if(self.popunder.classList.contains("fixed"))
+        return self.popunder.style.bottom = 0;
 
-        if(node == self.lastEndContainerNode) {
-          self.$popunder.removeClass("hidden");
-          self.$popunder[0].scrollIntoViewIfNeeded(false);
-          return;
-        }
-        else {
-          var delay = (self.$popunder.hasClass("hidden")) ? 0 : 500;
-          self.$popunder.addClass("hidden");
-          setTimeout(function() {
-            self.lastEndContainerNode = node;
-            $(node).after(self.$popunder);
-            setTimeout(function() {
-              self.$popunder.removeClass("hidden");
-              setTimeout(function() {
-                self.$popunder[0].scrollIntoViewIfNeeded(false); // We should animate this
-              }, 100);
-            }, 100);
-          }, delay); 
-        }
+      var range = sel.getRangeAt(0);
+      var node = range.endContainer.parentNode; // The <p> where the selection ends
+
+      // If we already have a popunder ready at the right place
+      if(node.nextElementSibling == self.popunder) {
+        self.pushSiblings(node);
+        return self.popunder.classList.add('show');
       }
-      else {
-        if(self.$popunder.hasClass("fixed"))
-          return self.$popunder[0].style.bottom = '-50px';
 
-        self.$popunder.addClass("hidden");
+      // If the popunder is currently displayed, we first hide it and then we try again
+      if(self.popunder.classList.contains('show')) 
+        return self.hidePopunder(self.showPopunder);
+
+      // We need to push down all the following siblings 
+      self.pushSiblings(node);
+      node.parentNode.insertBefore(self.popunder,node.nextElementSibling);
+
+      setTimeout(function() {
+        self.popunder.classList.add('show');
+      },0);
+
+    };
+
+    this.pushSiblings = function(el) {
+      while(el=el.nextElementSibling) { el.classList.add('moveDown'); }
+    };
+
+    this.hidePopunder = function(cb) {
+      cb = cb || function() {};
+
+      if(self.popunder == "fixed") {
+        self.popunder.style.bottom = '-50px';
+        return cb();
       }
+
+      self.popunder.classList.remove('show');
+
+      // We need to push back up all the siblings
+      s = self.popunder;
+      while(s = s.nextElementSibling) { s.classList.remove('moveDown'); }
+
+      // CSS3 transition takes 0.6s
+      setTimeout(cb, 600);
+
     };
 
     this.show = function(e) {
@@ -211,7 +230,7 @@
                        + '  <div class="selectionSharerPopover-clip"><span class="selectionSharerPopover-arrow"></span></div>'
                        + '</div>';
 
-      var popunderHTML = '<div class="selectionSharer hidden" id="selectionSharerPopunder">'
+      var popunderHTML = '<div id="selectionSharerPopunder" class="selectionSharer">'
                        + '  <div id="selectionSharerPopunder-inner">'
                        + '    <ul>'
                        + '      <li><label>Share this selection</label></li>'
@@ -236,7 +255,7 @@
     this.setElements = function(elements) {
       if(typeof elements == 'string') elements = $(elements);
       self.$elements = elements instanceof $ ? elements : $(elements);
-      self.$elements.mouseup(self.show).mousedown(self.hide);
+      self.$elements.mouseup(self.show).mousedown(self.hide).addClass("selectionShareable");
 
       self.$elements.bind('touchstart', function(e) {
         self.isMobile = true;

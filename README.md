@@ -34,10 +34,18 @@ Or more simply:
 
 That's it. 
 
+Please let me know if you install this script on your site. Just star this repo and ping me on Twitter [@xdamman](https://twitter.com/intent/tweet?status=%40xdamman%20Thanks%20for%20http%3A%2F%2Fxdamman.github.io%2Fselection-sharer%20-%20It%20looks%20great%20on%20my%20site:%20). Thank you!
+
 ### Notes 
 
 - Images are included inline in the CSS as SVG (perfect for Retina displays, loading time and to easily create new color schemes)
 - Total size gzipped minified: 3.5K (equally split between css and javascript)
+
+## Demos
+
+There is a `demos/` directory with some examples using `jquery`, `requirejs` or simple javascript. 
+
+You can also try it directly on my blog on http://xdamman.com.
 
 
 ## Bookmarklet version

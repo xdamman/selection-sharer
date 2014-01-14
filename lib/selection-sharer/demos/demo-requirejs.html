@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="twitter:site" content="techcrunch" />
+  <title>Share Selection Demo</title>
+  <script src="https://code.jquery.com/jquery-latest.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js"></script>
+  <style>
+  body {
+    font-family:"Helvetica Neue", Helvetica;
+    font-weight: 200;
+    line-height: 1.5;
+  }
+
+  #wrap {
+    max-width: 660px;
+    margin: 100px auto;
+  }
+  </style>
+
+  <link rel="stylesheet" href="../dist/selection-sharer.css" />
+  
+</head>
+  
+<body>
+  
+  <div id="wrap">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore alias ullam eveniet officiis consequatur laboriosam porro aliquid minima eum impedit. Suscipit minima eligendi necessitatibus consequuntur pariatur natus quae placeat. Suscipit.</p>
+
+    <p>This script will also scan the document to look for related twitter accounts to sugges to follow after the user shares a quote. Here, it should suggest to follow me (<a href="http://twitter.com/xdamman">@xdamman</a>).</p>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium eius iusto placeat ex repellat sit cumque consequatur corporis? Minus harum enim odit aperiam ut recusandae veritatis architecto eum laudantium autem.</p>
+  </div>
+
+  <script>
+  require(["../dist/selection-sharer!"]);
+  </script>
+
+</body>
+</html>
+

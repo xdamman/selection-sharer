@@ -283,7 +283,17 @@
 
   };
 
+  // jQuery plugin 
+  // Usage: $( "p" ).selectionSharer();
+  $.fn.selectionSharer = function() {
+    var sharer = new SelectionSharer();
+    sharer.setElements(this);
+    return this; 
+  };
+
   // For AMD / requirejs
+  // Usage: require(["selection-sharer!"]); 
+  //     or require(["selection-sharer"], function(selectionSharer) { var sharer = new SelectionSharer('p'); });
   if(typeof define == 'function') {
     define(function() { 
       SelectionSharer.load = function (name, req, onLoad, config) {
@@ -296,7 +306,11 @@
 
   }
   else {
+    // Registering SelectionSharer as a global
+    // Usage: var sharer = new SelectionSharer('p');
     window.SelectionSharer = SelectionSharer;
   }
   
 })(jQuery);
+
+ 

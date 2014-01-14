@@ -1,10 +1,10 @@
 # selection-sharer
 
-Medium like popover menu to share on Twitter or by email any text selected on the page with support for mobile devices (with a popunder).
+Popover menu to share on Twitter or by email any text selected on the page with support for mobile devices (with a popunder).
 
 ![selection sharer screenshot](http://f.cl.ly/items/282u1E2K0C2K0i1W3P0G/selection-sharer-screenshot.png)
     
-## How to use on your site
+## How to add it to your site
 
 This script requires jQuery so make sure you have it loaded on your page.
 
@@ -16,7 +16,7 @@ and add the Javascript at the bottom of your page near the closing `</body>` tag
 
     <script src="dist/selection-sharer.js"></script>
     <script>
-    var sharer = new SelectionSharer('p'); // bind mouseup event to all <p> elements
+    $('p').selectionSharer();
 	</script>
 
 Or if you are using [requirejs](http://requirejs.org), you can do:

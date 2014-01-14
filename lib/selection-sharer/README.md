@@ -1,17 +1,10 @@
 # selection-sharer
 
-Medium like popover menu to share on Twitter or by email any text selected on the page.
+Popover menu to share on Twitter or by email any text selected on the page with support for mobile devices (with a popunder).
 
-![](http://f.cl.ly/items/1i0v3l2b3P342D2b302J/share-selection.png)
-
-
-## Bookmarklet version
-
-Add a new bookmark to your bookmark bar, edit its url and copy paste the following code:
-
-    javascript:(function(){var s=document.createElement('script');s.src="//xdamman.github.io/selection-sharer/lib/selection-sharer/dist/bookmarklet.js";document.body.appendChild(s);})()
+![selection sharer screenshot](http://f.cl.ly/items/282u1E2K0C2K0i1W3P0G/selection-sharer-screenshot.png)
     
-## How to use on your site
+## How to add it to your site
 
 This script requires jQuery so make sure you have it loaded on your page.
 
@@ -23,16 +16,20 @@ and add the Javascript at the bottom of your page near the closing `</body>` tag
 
     <script src="dist/selection-sharer.js"></script>
     <script>
-    var sharer = new SelectionSharer('p'); // bind mouseup event to all <p> elements
+    $('p').selectionSharer();
 	</script>
 
-Or if you are using [requirejs](http://requirejs.org), you can simply do:
+Or if you are using [requirejs](http://requirejs.org), you can do:
 
 
     require(["dist/selection-sharer"], function(SelectionSharer) {
       var sharer = new SelectionSharer();
       selectionSharer.setElements('p'); // bind mouseup event to all <p> elements
     });
+
+Or more simply:
+
+    require(["dist/selection-sharer!"]);
 
 
 That's it. 
@@ -41,7 +38,14 @@ That's it.
 
 - Images are included inline in the CSS as SVG (perfect for Retina displays, loading time and to easily create new color schemes)
 - Total size gzipped minified: 3.5K (equally split between css and javascript)
-- Only works on desktop (for now)
+
+
+## Bookmarklet version
+
+Add a new bookmark to your bookmark bar, edit its url and copy paste the following code:
+
+    javascript:(function(){var s=document.createElement('script');s.src="//xdamman.github.io/selection-sharer/lib/selection-sharer/dist/bookmarklet.js";document.body.appendChild(s);})()
+
 
 ## Building
 

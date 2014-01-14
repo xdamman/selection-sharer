@@ -46,7 +46,7 @@
 </code></pre>
 
 <h2>
-<a name="how-to-use-on-your-site" class="anchor" href="#how-to-use-on-your-site"><span class="octicon octicon-link"></span></a>How to use on your site</h2>
+<a name="how-to-use-on-your-site" class="anchor" href="#how-to-use-on-your-site"><span class="octicon octicon-link"></span></a>How to add it to your site</h2>
 
 <p>This script requires jQuery so make sure you have it loaded on your page.</p>
 
@@ -59,7 +59,7 @@
 
 <pre><code>&lt;script src="dist/selection-sharer.js"&gt;&lt;/script&gt;
 &lt;script&gt;
-var sharer = new SelectionSharer('p'); // bind mouseup event to all &lt;p&gt; elements
+$('p').selectionSharer();
 &lt;/script&gt;
 </code></pre>
 
@@ -84,6 +84,11 @@ var sharer = new SelectionSharer('p'); // bind mouseup event to all &lt;p&gt; el
 <li>Images are included inline in the CSS as SVG (perfect for Retina displays, loading time and to easily create new color schemes)</li>
 <li>Total size gzipped minified: 3.5K (equally split between css and javascript)</li>
 </ul><h2>
+Demos</h2>
+<ul><li><a href="http://xdamman.github.io/selection-sharer/lib/selection-sharer/demos/demo.html">Simple demo</a></li>
+<li><a href="http://xdamman.com">My blog</a></li>
+</ul>
+<h2>
 <a name="build" class="anchor" href="#build"><span class="octicon octicon-link"></span></a>Build</h2>
 
 <p>To recompile the minified versions of the css and javascript in the <code>dist/</code> directory, simply run:</p>

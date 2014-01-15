@@ -87,7 +87,7 @@
     };
 
     this.pushSiblings = function(el) {
-      while(el=el.nextElementSibling) { el.classList.add('moveDown'); }
+      while(el=el.nextElementSibling) { el.classList.add('selectionSharer'); el.classList.add('moveDown'); }
     };
 
     this.hidePopunder = function(cb) {

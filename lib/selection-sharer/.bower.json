@@ -1,12 +1,12 @@
 {
   "name": "selection-sharer",
   "homepage": "https://github.com/xdamman/selection-sharer",
-  "version": "0.0.12",
-  "_release": "0.0.12",
+  "version": "0.0.13",
+  "_release": "0.0.13",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.12",
-    "commit": "cf2ce4f239342183d6da121190c0cf0f487c99f4"
+    "tag": "v0.0.13",
+    "commit": "527614ff711071207aa37473682e4e785155dd2c"
   },
   "_source": "git://github.com/xdamman/selection-sharer.git",
   "_target": "*",

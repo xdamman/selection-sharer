@@ -32,7 +32,7 @@
             for (var i = 0, len = sel.rangeCount; i < len; ++i) {
                 container.appendChild(sel.getRangeAt(i).cloneContents());
             }
-            text = container.innerText;
+            text = container.textContent;
             html = container.innerHTML
         }
         self.textSelection = text;
@@ -138,7 +138,7 @@
       setTimeout(function() {
         var sel = window.getSelection(); 
         var selection = self.getSelectionText(sel);
-        if(!sel.isCollapsed && selection.length>10 && selection.match(/ /)) {
+        if(!sel.isCollapsed && selection && selection.length>10 && selection.match(/ /)) {
           var range = sel.getRangeAt(0);
           var topOffset = range.getBoundingClientRect().top - 5;
           var top = topOffset + window.scrollY - self.$popover.height();

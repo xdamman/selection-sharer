@@ -1,6 +1,6 @@
 {
   "name": "share-selection",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Medium like popover menu to share on Twitter or by email any text selected on the page",
   "main": "src/share-selection.js",
   "scripts": {

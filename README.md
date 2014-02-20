@@ -69,7 +69,7 @@ This is still early days so there is still a lot to do and I welcome contributio
 TODO:
 
 - Make a browser extension
-- Make a Wordpress plugin
+- Make a Wordpress plugin - done by @jcvangent http://wordpress.org/plugins/selection-sharer/ 
 - Add support for different themes
 - Add tests
 - Tests across multiple browsers (currently only tested on Chrome, Safari, Firefox on a Mac)

@@ -1,5 +1,5 @@
 /*
- * share-selection: Medium like popover menu to share on Twitter or by email any text selected on the page 
+ * share-selection: Medium like popover menu to share on Twitter or by email any text selected on the page
  *
  * -- Requires jQuery --
  * -- AMD compatible  --
@@ -52,9 +52,9 @@
     };
 
     this.showPopunder = function() {
-      self.popunder = self.popunder || document.getElementById('selectionSharerPopunder'); 
+      self.popunder = self.popunder || document.getElementById('selectionSharerPopunder');
 
-      var sel = window.getSelection(); 
+      var sel = window.getSelection();
       var selection = self.getSelectionText(sel);
 
       if(sel.isCollapsed || selection.length < 10 || !selection.match(/ /))
@@ -67,7 +67,7 @@
       var node = range.endContainer.parentNode; // The <p> where the selection ends
 
       // If the popunder is currently displayed
-      if(self.popunder.classList.contains('show')) { 
+      if(self.popunder.classList.contains('show')) {
         // If the popunder is already at the right place, we do nothing
         if(Math.ceil(self.popunder.getBoundingClientRect().top) == Math.ceil(node.getBoundingClientRect().bottom))
           return;
@@ -77,16 +77,16 @@
       }
 
       if(node.nextElementSibling) {
-        // We need to push down all the following siblings 
+        // We need to push down all the following siblings
         self.pushSiblings(node);
       }
       else {
-        // We need to append a new element to push all the content below 
+        // We need to append a new element to push all the content below
         if(!self.placeholder) {
           self.placeholder = document.createElement('div');
           self.placeholder.className = 'selectionSharerPlaceholder';
         }
-       
+
         // If we add a div between two <p> that have a 1em margin, the space between them
         // will become 2x 1em. So we give the placeholder a negative margin to avoid that
         var margin = window.getComputedStyle(node).marginBottom;
@@ -136,7 +136,7 @@
 
     this.show = function(e) {
       setTimeout(function() {
-        var sel = window.getSelection(); 
+        var sel = window.getSelection();
         var selection = self.getSelectionText(sel);
         if(!sel.isCollapsed && selection && selection.length>10 && selection.match(/ /)) {
           var range = sel.getRangeAt(0);
@@ -193,12 +193,12 @@
 
       // We scrape the page to find a link to http(s)://twitter.com/username
       var anchors = document.getElementsByTagName('a');
-      for(var i=0, len=anchors.length;i<len;i++) { 
+      for(var i=0, len=anchors.length;i<len;i++) {
         if(anchors[i].attributes.href && typeof anchors[i].attributes.href.value == 'string') {
-          var matches = anchors[i].attributes.href.value.match(/^https?:\/\/twitter\.com\/([a-z0-9_]{1,20})/i) 
+          var matches = anchors[i].attributes.href.value.match(/^https?:\/\/twitter\.com\/([a-z0-9_]{1,20})/i)
           if(matches && matches.length > 1 && ['widgets','intent'].indexOf(matches[1])==-1)
-            usernames.push(matches[1]); 
-        } 
+            usernames.push(matches[1]);
+        }
       }
 
       if(usernames.length > 0)
@@ -208,16 +208,7 @@
     };
 
     this.shareTwitter = function(e) {
-      e.preventDefault(); 
-
-      if(!self.viaTwitterAccount) {
-        self.viaTwitterAccount = $('meta[name="twitter:site"]').attr("content") || $('meta[name="twitter:site"]').attr("value") || "";
-        self.viaTwitterAccount = self.viaTwitterAccount.replace(/@/,'');
-      }
-
-      if(!self.relatedTwitterAccounts) {
-        self.relatedTwitterAccounts = self.getRelatedTwitterAccounts();
-      }
+      e.preventDefault();
 
       var text = "“"+self.smart_truncate(self.textSelection.trim(), 114)+"”";
       var url = 'http://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&related='+self.relatedTwitterAccounts+'&url='+encodeURIComponent(window.location.href);
@@ -234,6 +225,20 @@
       return false;
     };
 
+    this.shareFacebook = function(e) {
+      e.preventDefault();
+
+      var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
+      var appId = $('meta[property="fb:app_id"]').attr("content") || $('meta[property="fb:app_id"]').attr("value");
+      var url2share = $('meta[property="og:url"]').attr("content")
+      if (!appId || !url2share)
+      {
+        console.log('This page does not have a valid Facebook Open Graph Meta tags');
+        return false;
+      }
+      var url = 'https://www.facebook.com/dialog/feed?app_id='+appId+'&display=page&name='+encodeURIComponent(text)+'&link='+encodeURIComponent(url2share)+'&redirect_uri='+encodeURIComponent(url2share);
+      window.location.href=url;
+    };
     this.shareEmail = function(e) {
       var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
       var email = {};
@@ -249,6 +254,7 @@
                        + '  <div id="selectionSharerPopover-inner">'
                        + '    <ul>'
                        + '      <li><a class="action tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
+                       + '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>'
                        + '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="#FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
                        + '    </ul>'
                        + '  </div>'
@@ -260,6 +266,7 @@
                        + '    <label>Share this selection</label>'
                        + '    <ul>'
                        + '      <li><a class="action tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
+                       + '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>'
                        + '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="#FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
                        + '    </ul>'
                        + '  </div>'
@@ -267,12 +274,14 @@
 
       self.$popover = $(popoverHTML);
       self.$popover.find('a.tweet').click(self.shareTwitter);
+      self.$popover.find('a.facebook').click(self.shareFacebook);
       self.$popover.find('a.email').click(self.shareEmail);
 
       $('body').append(self.$popover);
 
       self.$popunder = $(popunderHTML);
       self.$popunder.find('a.tweet').click(self.shareTwitter);
+      self.$popunder.find('a.facebook').click(self.shareFacebook);
       self.$popunder.find('a.email').click(self.shareEmail);
       $('body').append(self.$popunder);
     };
@@ -308,25 +317,25 @@
 
   };
 
-  // jQuery plugin 
+  // jQuery plugin
   // Usage: $( "p" ).selectionSharer();
   $.fn.selectionSharer = function() {
     var sharer = new SelectionSharer();
     sharer.setElements(this);
-    return this; 
+    return this;
   };
 
   // For AMD / requirejs
-  // Usage: require(["selection-sharer!"]); 
+  // Usage: require(["selection-sharer!"]);
   //     or require(["selection-sharer"], function(selectionSharer) { var sharer = new SelectionSharer('p'); });
   if(typeof define == 'function') {
-    define(function() { 
+    define(function() {
       SelectionSharer.load = function (name, req, onLoad, config) {
         var sharer = new SelectionSharer();
         sharer.setElements('p');
         onLoad();
       };
-      return SelectionSharer; 
+      return SelectionSharer;
     });
 
   }
@@ -335,7 +344,7 @@
     // Usage: var sharer = new SelectionSharer('p');
     window.SelectionSharer = SelectionSharer;
   }
-  
+
 })(jQuery);
 
- 
+

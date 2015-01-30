@@ -19,6 +19,11 @@ and add the Javascript at the bottom of your page near the closing `</body>` tag
     $('p').selectionSharer();
 	</script>
 
+If you want to add Facebook share, please make sure that your page has a Facebook App ID meta tag:
+    <meta property="fb:app_id" content="123456789" />
+The url shared can be set using the og:url tag:
+<meta property="og:url" content="http://your.url/to/share" />
+
 Or if you are using [requirejs](http://requirejs.org), you can do:
 
 

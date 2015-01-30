@@ -23,6 +23,8 @@
     this.textSelection='';
     this.htmlSelection='';
 
+    this.appId = $('meta[property="fb:app_id"]').attr("content") || $('meta[property="fb:app_id"]').attr("value");
+    this.url2share = $('meta[property="og:url"]').attr("content") || $('meta[property="og:url"]').attr("value") || window.location.href;
 
     this.getSelectionText = function(sel) {
         var html = "", text = "";
@@ -227,18 +229,11 @@
 
     this.shareFacebook = function(e) {
       e.preventDefault();
-
       var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
-      var appId = $('meta[property="fb:app_id"]').attr("content") || $('meta[property="fb:app_id"]').attr("value");
-      var url2share = $('meta[property="og:url"]').attr("content")
-      if (!appId || !url2share)
-      {
-        console.log('This page does not have a valid Facebook Open Graph Meta tags');
-        return false;
-      }
-      var url = 'https://www.facebook.com/dialog/feed?app_id='+appId+'&display=page&name='+encodeURIComponent(text)+'&link='+encodeURIComponent(url2share)+'&redirect_uri='+encodeURIComponent(url2share);
+      var url = 'https://www.facebook.com/dialog/feed?app_id='+self.appId+'&display=page&name='+encodeURIComponent(text)+'&link='+encodeURIComponent(self.url2share)+'&redirect_uri='+encodeURIComponent(self.url2share);
       window.location.href=url;
     };
+
     this.shareEmail = function(e) {
       var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
       var email = {};
@@ -271,7 +266,6 @@
                        + '    </ul>'
                        + '  </div>'
                        + '</div>';
-
       self.$popover = $(popoverHTML);
       self.$popover.find('a.tweet').click(self.shareTwitter);
       self.$popover.find('a.facebook').click(self.shareFacebook);
@@ -284,6 +278,10 @@
       self.$popunder.find('a.facebook').click(self.shareFacebook);
       self.$popunder.find('a.email').click(self.shareEmail);
       $('body').append(self.$popunder);
+
+      if (self.appId && self.url2share){
+        $(".selectionSharer a.facebook").css('display','inline-block');
+      }
     };
 
     this.setElements = function(elements) {

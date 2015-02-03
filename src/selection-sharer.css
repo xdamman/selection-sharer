@@ -193,7 +193,7 @@
 #selectionSharerPopunder-inner ul {
   overflow: hidden;
   float:right;
-  margin: 5px 5px 0px 0px;
+  margin: 0px;
 }
 
 #selectionSharerPopunder-inner ul li {

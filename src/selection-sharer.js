@@ -232,7 +232,18 @@
       var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
       var url = 'https://www.facebook.com/dialog/feed?app_id='+self.appId+'&display=page&name='+encodeURIComponent(text)+'&link='+encodeURIComponent(self.url2share)+'&redirect_uri='+encodeURIComponent(self.url2share);
       window.location.href=url;
+      window.open(url, "share_linkedin", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
     };
+
+    this.shareLinkedIn = function(e) {
+        e.preventDefault();
+         var text = self.htmlSelection.replace(/<p[^>]*>/ig, "\n").replace(/<\/p>|  /ig, "").trim();
+         var url = "https://www.linkedin.com/shareArticle?mini=true&url=" + encodeURIComponent(self.url2share) + "&title=" + encodeURIComponent(text);
+         var w = 640, h=440;
+		 var left = (screen.width/2)-(w/2);
+		 var top = (screen.height/2)-(h/2)-100;
+         window.open(url, "share_linkedin", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+    }
 
     this.shareEmail = function(e) {
       var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
@@ -250,6 +261,7 @@
                        + '    <ul>'
                        + '      <li><a class="action tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
                        + '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>'
+                       + '      <li><a class="action linkedin" href="" title="Share this selection on LinkedIn" target="_blank">LinkedIn</a></li>'
                        + '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="#FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
                        + '    </ul>'
                        + '  </div>'
@@ -262,6 +274,7 @@
                        + '    <ul>'
                        + '      <li><a class="action tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
                        + '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>'
+                       + '      <li><a class="action linkedin" href="" title="Share this selection on LinkedIn" target="_blank">LinkedIn</a></li>'
                        + '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="#FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
                        + '    </ul>'
                        + '  </div>'
@@ -269,6 +282,7 @@
       self.$popover = $(popoverHTML);
       self.$popover.find('a.tweet').click(self.shareTwitter);
       self.$popover.find('a.facebook').click(self.shareFacebook);
+      self.$popover.find('a.linkedin').click(self.shareLinkedIn);
       self.$popover.find('a.email').click(self.shareEmail);
 
       $('body').append(self.$popover);
@@ -276,6 +290,7 @@
       self.$popunder = $(popunderHTML);
       self.$popunder.find('a.tweet').click(self.shareTwitter);
       self.$popunder.find('a.facebook').click(self.shareFacebook);
+      self.$popunder.find('a.linkedin').click(self.shareLinkedIn);
       self.$popunder.find('a.email').click(self.shareEmail);
       $('body').append(self.$popunder);
 
@@ -344,5 +359,3 @@
   }
 
 })(jQuery);
-
-

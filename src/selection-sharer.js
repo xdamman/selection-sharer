@@ -230,8 +230,19 @@
     this.shareFacebook = function(e) {
       e.preventDefault();
       var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
-      var url = 'https://www.facebook.com/dialog/feed?app_id='+self.appId+'&display=page&name='+encodeURIComponent(text)+'&link='+encodeURIComponent(self.url2share)+'&redirect_uri='+encodeURIComponent(self.url2share);
-      window.location.href=url;
+
+      var url = 'http://www.facebook.com/dialog/share?' +
+                'app_id='+self.appId +
+                '&display=popup'+
+                '&name='+encodeURIComponent(text)+
+                '&link='+encodeURIComponent(self.url2share)+
+                '&href='+encodeURIComponent(self.url2share)+
+                '&redirect_uri='+encodeURIComponent(self.url2share);
+      var w = 640, h=440;
+      var left = (screen.width/2)-(w/2);
+      var top = (screen.height/2)-(h/2)-100;
+
+      window.open(url, "share_facebook", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
     };
 
     this.shareEmail = function(e) {

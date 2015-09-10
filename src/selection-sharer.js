@@ -246,7 +246,7 @@
     };
 
     this.shareEmail = function(e) {
-      var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
+      var text = self.textSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
       var email = {};
       email.subject = encodeURIComponent("Quote from "+document.title);
       email.body = encodeURIComponent("“"+text+"”")+"%0D%0A%0D%0AFrom: "+document.title+"%0D%0A"+window.location.href;

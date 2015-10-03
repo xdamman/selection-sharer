@@ -1,0 +1,220 @@
+/*
+ * share-selection: Medium like popover menu to share on Twitter or by email any text selected on the page
+ *
+ * -- Requires jQuery --
+ * -- AMD compatible  --
+ *
+ * Author: Xavier Damman (@xdamman)
+ * GIT: https://github.com/xdamman/share-selection
+ * MIT License
+ */
+
+@keyframes selectionSharerPopover-animation {
+  0%{
+  transform:matrix(0.97,0,0,1,0,12);
+  filter:alpha(opacity=0);
+  opacity:0
+  }
+  20%{
+  transform:matrix(0.99,0,0,1,0,2);
+  filter:alpha(opacity=70);
+  opacity:.7
+  }
+  40%{
+  transform:matrix(1,0,0,1,0,-1);
+  filter:alpha(opacity=100);
+  opacity:1
+  }
+  70%{
+  transform:matrix(1,0,0,1,0,0);
+  filter:alpha(opacity=100);
+  opacity:1
+  }
+  100%{
+  transform:matrix(1,0,0,1,0,0);
+  filter:alpha(opacity=100);
+  opacity:1
+  }
+}
+
+#selectionSharerPopover {
+  display: none;
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  z-index: 1010;
+}
+
+#selectionSharerPopover:after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  margin-left: -4px;
+  width: 8px;
+  height: 8px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  background: #262625;
+  box-shadow: 0 0 2px #262625;
+}
+
+#selectionSharerPopover.anim {
+  transition: top .075s ease-out;
+  animation: selectionSharerPopover-animation 180ms forwards linear;
+  -webkit-animation: selectionSharerPopover-animation 180ms forwards linear;
+}
+
+#selectionSharerPopover-inner {
+  position:relative;
+  overflow: hidden;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid;
+  border-color: #262625 #1c1c1b #121211;
+  box-shadow: 0 1px 3px -1px rgba(0,0,0,0.7),inset 0 0 1px rgba(255,255,255,0.07),inset 0 0 2px rgba(255,255,255,0.15);
+  background-image: linear-gradient(to bottom,rgba(49,49,47,0.97),#262625);
+  background-repeat: repeat-x;
+}
+
+#selectionSharerPopover .selectionSharerPopover-clip {
+  position: absolute;
+  bottom: -11px;
+  display: block;
+  left: 50%;
+  clip: rect(12px 24px 24px 0);
+  margin-left: -12px;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+}
+
+#selectionSharerPopover .selectionSharerPopover-arrow {
+  display: block;
+  width: 20px;
+  height: 20px;
+  -webkit-transform: rotate(45deg) scale(0.5);
+  transform: rotate(45deg) scale(0.5);
+  background-color: #454543;
+  border: 2px solid #121211;
+  box-sizing:content-box;
+}
+
+
+.selectionSharer ul {
+  padding: 0;
+  display: inline;
+}
+
+.selectionSharer ul li {
+  float: left;
+  list-style: none;
+  background: none;
+  margin: 0;
+}
+
+.selectionSharer a.action {
+  display:block;
+  text-indent: -200px;
+  margin: 5px 7px;
+  width:20px;
+  height: 20px;
+  border: none;
+}
+
+.selectionSharer a:hover {
+  color: #ccc;
+}
+
+.selectionSharer a.tweet {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="171" height="139"><g transform="translate(-282.32053,-396.30734)"><path style="fill:white" d="m 453.82593,412.80619 c -6.3097,2.79897 -13.09189,4.68982 -20.20852,5.54049 7.26413,-4.35454 12.84406,-11.24992 15.47067,-19.46675 -6.79934,4.03295 -14.3293,6.96055 -22.34461,8.53841 -6.41775,-6.83879 -15.56243,-11.111 -25.68298,-11.111 -19.43159,0 -35.18696,15.75365 -35.18696,35.18525 0,2.75781 0.31128,5.44359 0.91155,8.01875 -29.24344,-1.46723 -55.16995,-15.47582 -72.52461,-36.76396 -3.02879,5.19662 -4.76443,11.24048 -4.76443,17.6891 0,12.20777 6.21194,22.97747 15.65332,29.28716 -5.76773,-0.18265 -11.19331,-1.76565 -15.93716,-4.40083 -0.004,0.14663 -0.004,0.29412 -0.004,0.44248 0,17.04767 12.12889,31.26806 28.22555,34.50266 -2.95247,0.80436 -6.06101,1.23398 -9.26989,1.23398 -2.2673,0 -4.47114,-0.22124 -6.62011,-0.63114 4.47801,13.97857 17.47214,24.15143 32.86992,24.43441 -12.04227,9.43796 -27.21366,15.06335 -43.69965,15.06335 -2.84014,0 -5.64082,-0.16722 -8.39349,-0.49223 15.57186,9.98421 34.06703,15.8094 53.93768,15.8094 64.72024,0 100.11301,-53.61524 100.11301,-100.11387 0,-1.52554 -0.0343,-3.04251 -0.10204,-4.55261 6.87394,-4.95995 12.83891,-11.15646 17.55618,-18.21305 z" /></g></svg>') no-repeat;
+  background-size: 18px;
+  background-position: 2px 4px;
+}
+
+.selectionSharer a.facebook {
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 33 33" width="25" height="25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path style="fill:white" d="M 17.996,32L 12,32 L 12,16 l-4,0 l0-5.514 l 4-0.002l-0.006-3.248C 11.993,2.737, 13.213,0, 18.512,0l 4.412,0 l0,5.515 l-2.757,0 c-2.063,0-2.163,0.77-2.163,2.209l-0.008,2.76l 4.959,0 l-0.585,5.514L 18,16L 17.996,32z"></path></g></svg>') no-repeat;
+  background-size: 18px;
+  background-position: 0px 2px;
+  display:none;
+}
+
+.selectionSharer a.email {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="94" height="64"><g transform="translate(-10, -10)" fill="transparent"><rect x="0" y="0" width="114" height="114"></rect><path d="M12,12 L102,12 L102,72 L12,72 L12,12 Z M16,12 L53,49 C55.6666667,51 58.3333333,51 61,49 L98,12 L16,12 Z M15,72 L45,42 L15,72 Z M69,42 L99,72 L69,42 Z" stroke="white" stroke-width="5"></path></g></svg>') no-repeat;
+  background-size: 20px;
+  background-position: 0px 4px;
+}
+
+
+#selectionSharerPopunder.fixed {
+  transition: bottom 0.5s ease-in-out;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom:-50px;
+}
+
+.selectionSharer {
+  transition: -webkit-transform 0.6s ease-in-out;
+}
+
+.selectionSharer.moveDown {
+  -webkit-transform: translate3d(0,60px,0);
+}
+
+#selectionSharerPopunder {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 0px;
+  transition: height 0.5s ease-in-out;
+  background: #ccc;
+  border: none;
+  box-shadow: inset 0px 10px 5px -10px rgba(0,0,0,0.5), inset 0px -10px 5px -10px rgba(0,0,0,0.5);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+#selectionSharerPopunder.show {
+  height: 50px;
+}
+
+.selectionSharerPlaceholder {
+  height: 1em;
+  margin-bottom: -2em;
+  transition: height 0.5s ease-in-out;
+}
+
+.selectionSharerPlaceholder.show {
+  height: 50px !important;
+}
+
+#selectionSharerPopunder-inner ul {
+  overflow: hidden;
+  float:right;
+  margin: 0px;
+}
+
+#selectionSharerPopunder-inner ul li {
+  padding: 5px;
+  overflow: hidden;
+}
+
+#selectionSharerPopunder-inner label {
+  color: white;
+  font-weight: 300;
+  line-height: 50px;
+  margin: 0px 20px 0px 10px;
+}
+
+#selectionSharerPopunder-inner a {
+  width: 30px;
+  height: 30px;
+  background-size: 30px;
+}
+
+#selectionSharerPopunder-inner a.tweet {
+  background-position: 0px 2px;
+}
+

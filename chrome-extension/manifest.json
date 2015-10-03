@@ -1,0 +1,19 @@
+{
+"name":"selection-sharer",
+"description":"https://github.com/xdamman/selection-sharer",
+"author":"rhnvrm",
+"version":"0.0.15.1",
+"manifest_version":2,
+"web_accessible_resources": ["selection-sharer.js", "jquery-2.1.4.min.js", "selection-sharer.css"],
+"content_scripts": [
+    {
+    	"matches": [
+        "http://*/*",
+        "https://*/*"
+      	],
+      	"js": ["myscript.js"],
+      	"run_at": "document_end",
+      	"all_frames": false
+    }
+  ]
+}

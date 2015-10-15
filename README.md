@@ -27,6 +27,9 @@ The url shared can be set using the og:url tag:
 
     <meta property="og:url" content="http://your.url/to/share" />
 
+The url shared via twitter can be set using a link tag with the "shortlink" rel attribute -- see http://microformats.org/wiki/rel-shortlink for more information:
+
+    <link rel="shortlink" href="http://bit.ly/1VV1wxD" />
 
 Or if you are using [requirejs](http://requirejs.org), you can do:
 

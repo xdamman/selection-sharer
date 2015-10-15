@@ -25,6 +25,7 @@
 
     this.appId = $('meta[property="fb:app_id"]').attr("content") || $('meta[property="fb:app_id"]').attr("value");
     this.url2share = $('meta[property="og:url"]').attr("content") || $('meta[property="og:url"]').attr("value") || window.location.href;
+    this.shorturl = $('link[rel="shortlink"]').attr("href") || this.url2share;
 
     this.getSelectionText = function(sel) {
         var html = "", text = "";
@@ -190,8 +191,8 @@
       var usernames = [];
 
       var creator = $('meta[name="twitter:creator"]').attr("content") || $('meta[name="twitter:creator"]').attr("value");
+      alert(creator);
       if(creator) usernames.push(creator);
-
 
       // We scrape the page to find a link to http(s)://twitter.com/username
       var anchors = document.getElementsByTagName('a');
@@ -213,7 +214,7 @@
       e.preventDefault();
 
       var text = "“"+self.smart_truncate(self.textSelection.trim(), 114)+"”";
-      var url = 'http://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&related='+self.relatedTwitterAccounts+'&url='+encodeURIComponent(window.location.href);
+      var url = 'http://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&related='+self.relatedTwitterAccounts+'&url='+encodeURIComponent(self.shorturl);
 
       // We only show the via @twitter:site if we have enough room
       if(self.viaTwitterAccount && text.length < (120-6-self.viaTwitterAccount.length))

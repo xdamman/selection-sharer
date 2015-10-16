@@ -191,7 +191,6 @@
       var usernames = [];
 
       var creator = $('meta[name="twitter:creator"]').attr("content") || $('meta[name="twitter:creator"]').attr("value");
-      alert(creator);
       if(creator) usernames.push(creator);
 
       // We scrape the page to find a link to http(s)://twitter.com/username
@@ -232,10 +231,18 @@
       e.preventDefault();
       var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
 
+      var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
+      var name = $('h1[itemprop="headline"]').text() || $('h1.p-name').text() || $('h1').text();
+      var img = $('img.u-img').attr('src') || $('img[itemprop="image"]').attr('src');
+      var picture = document.location.origin + img;
+
       var url = 'https://www.facebook.com/dialog/feed?' +
                 'app_id='+self.appId +
                 '&display=popup'+
-                '&caption='+encodeURIComponent(text)+
+                '&picture='+encodeURIComponent(picture)+
+                '&caption='+document.domain+
+                '&name='+encodeURIComponent(name)+
+                '&description='+encodeURIComponent(text)+
                 '&link='+encodeURIComponent(self.url2share)+
                 '&href='+encodeURIComponent(self.url2share)+
                 '&redirect_uri='+encodeURIComponent(self.url2share);

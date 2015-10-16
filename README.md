@@ -52,6 +52,7 @@ Please let me know if you install this script on your site. Just star this repo 
 
 - Images are included inline in the CSS as SVG (perfect for Retina displays, loading time and to easily create new color schemes)
 - Total size gzipped minified: 3.5K (equally split between css and javascript)
+- This branch differs from xdamman's upstream branch by slightly modifying the way the Facebook link sharer is called. In particular, it now modifies the "description" property instead of the "caption" property, and populates values for the page using schema.org and microformats.org microformat data.
 
 ## Demos
 

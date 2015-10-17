@@ -25,6 +25,7 @@
 
     this.appId = $('meta[property="fb:app_id"]').attr("content") || $('meta[property="fb:app_id"]').attr("value");
     this.url2share = $('meta[property="og:url"]').attr("content") || $('meta[property="og:url"]').attr("value") || window.location.href;
+    this.shorturl = $('link[rel="shortlink"]').attr("href") || this.url2share;
 
     this.getSelectionText = function(sel) {
         var html = "", text = "";
@@ -192,7 +193,6 @@
       var creator = $('meta[name="twitter:creator"]').attr("content") || $('meta[name="twitter:creator"]').attr("value");
       if(creator) usernames.push(creator);
 
-
       // We scrape the page to find a link to http(s)://twitter.com/username
       var anchors = document.getElementsByTagName('a');
       for(var i=0, len=anchors.length;i<len;i++) {
@@ -213,7 +213,7 @@
       e.preventDefault();
 
       var text = "“"+self.smart_truncate(self.textSelection.trim(), 114)+"”";
-      var url = 'http://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&related='+self.relatedTwitterAccounts+'&url='+encodeURIComponent(window.location.href);
+      var url = 'http://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&related='+self.relatedTwitterAccounts+'&url='+encodeURIComponent(self.shorturl);
 
       // We only show the via @twitter:site if we have enough room
       if(self.viaTwitterAccount && text.length < (120-6-self.viaTwitterAccount.length))
@@ -231,10 +231,18 @@
       e.preventDefault();
       var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
 
+      var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
+      var name = $('h1[itemprop="headline"]').text() || $('h1.p-name').text() || $('h1').text();
+      var img = $('img.u-img').attr('src') || $('img[itemprop="image"]').attr('src');
+      var picture = document.location.origin + img;
+
       var url = 'https://www.facebook.com/dialog/feed?' +
                 'app_id='+self.appId +
                 '&display=popup'+
-                '&caption='+encodeURIComponent(text)+
+                '&picture='+encodeURIComponent(picture)+
+                '&caption='+document.domain+
+                '&name='+encodeURIComponent(name)+
+                '&description='+encodeURIComponent(text)+
                 '&link='+encodeURIComponent(self.url2share)+
                 '&href='+encodeURIComponent(self.url2share)+
                 '&redirect_uri='+encodeURIComponent(self.url2share);

@@ -143,7 +143,7 @@
         if(!sel.isCollapsed && selection && selection.length>10 && selection.match(/ /)) {
           var range = sel.getRangeAt(0);
           var topOffset = range.getBoundingClientRect().top - 5;
-          var top = topOffset + window.scrollY - self.$popover.height();
+          var top = topOffset + window.pageYOffset - self.$popover.height();
           var left = 0;
           if(e) {
             left = e.pageX;

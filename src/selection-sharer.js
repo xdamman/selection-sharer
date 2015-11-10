@@ -28,14 +28,14 @@
 
     this.getSelectionText = function(sel) {
         var html = "", text = "";
-        var sel = sel || window.getSelection();
+        sel = sel || window.getSelection();
         if (sel.rangeCount) {
             var container = document.createElement("div");
             for (var i = 0, len = sel.rangeCount; i < len; ++i) {
                 container.appendChild(sel.getRangeAt(i).cloneContents());
             }
             text = container.textContent;
-            html = container.innerHTML
+            html = container.innerHTML;
         }
         self.textSelection = text;
         self.htmlSelection = html || text;
@@ -62,8 +62,10 @@
       if(sel.isCollapsed || selection.length < 10 || !selection.match(/ /))
         return self.hidePopunder();
 
-      if(self.popunder.classList.contains("fixed"))
-        return self.popunder.style.bottom = 0;
+      if(self.popunder.classList.contains("fixed")) {
+          self.popunder.style.bottom = 0;
+          return self.popunder.style.bottom;
+      }
 
       var range = sel.getRangeAt(0);
       var node = range.endContainer.parentNode; // The <p> where the selection ends
@@ -143,7 +145,7 @@
         if(!sel.isCollapsed && selection && selection.length>10 && selection.match(/ /)) {
           var range = sel.getRangeAt(0);
           var topOffset = range.getBoundingClientRect().top - 5;
-          var top = topOffset + window.scrollY - self.$popover.height();
+          var top = topOffset + self.getPosition().y - self.$popover.height();
           var left = 0;
           if(e) {
             left = e.pageX;
@@ -197,7 +199,7 @@
       var anchors = document.getElementsByTagName('a');
       for(var i=0, len=anchors.length;i<len;i++) {
         if(anchors[i].attributes.href && typeof anchors[i].attributes.href.value == 'string') {
-          var matches = anchors[i].attributes.href.value.match(/^https?:\/\/twitter\.com\/([a-z0-9_]{1,20})/i)
+          var matches = anchors[i].attributes.href.value.match(/^https?:\/\/twitter\.com\/([a-z0-9_]{1,20})/i);
           if(matches && matches.length > 1 && ['widgets','intent'].indexOf(matches[1])==-1)
             usernames.push(matches[1]);
         }
@@ -261,7 +263,7 @@
                        + '    <ul>'
                        + '      <li><a class="action tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
                        + '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>'
-                       + '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="#FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
+                       + '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
                        + '    </ul>'
                        + '  </div>'
                        + '  <div class="selectionSharerPopover-clip"><span class="selectionSharerPopover-arrow"></span></div>'
@@ -273,7 +275,7 @@
                        + '    <ul>'
                        + '      <li><a class="action tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
                        + '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>'
-                       + '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="#FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
+                       + '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
                        + '    </ul>'
                        + '  </div>'
                        + '</div>';
@@ -318,6 +320,15 @@
       }, 300);
     };
 
+    this.getPosition = function() {
+      var supportPageOffset = window.pageXOffset !== undefined;
+      var isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+
+      var x = supportPageOffset ? window.pageXOffset : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft;
+      var y = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+      return {x: x, y: y};
+    };
+
     this.render();
 
     if(options.elements) {
@@ -355,5 +366,3 @@
   }
 
 })(jQuery);
-
-

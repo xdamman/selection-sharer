@@ -69,7 +69,12 @@ Add a new bookmark to your bookmark bar, edit its url and copy paste the followi
 To recompile the minified versions of the css and javascript in the `dist/` directory, simply run:
 
     npm install
- 
+
+## Other Builds
+For Ruby On Rails applications you can use selection-sharer gem. We have a gem with selection-sharer js build and it is very easy to use.
+https://rubygems.org/gems/selection-sharer
+
+	gem 'selection-sharer'
 
 ## Contribute
 

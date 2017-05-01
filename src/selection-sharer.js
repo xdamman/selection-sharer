@@ -215,7 +215,7 @@
       e.preventDefault();
 
       var text = "“"+self.smart_truncate(self.textSelection.trim(), 114)+"”";
-      var url = 'http://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&related='+self.relatedTwitterAccounts+'&url='+encodeURIComponent(window.location.href);
+      var url = 'http://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&related='+self.relatedTwitterAccounts+'&url='+encodeURIComponent(self.url2share);
 
       // We only show the via @twitter:site if we have enough room
       if(self.viaTwitterAccount && text.length < (120-6-self.viaTwitterAccount.length))

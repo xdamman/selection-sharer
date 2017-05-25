@@ -1,0 +1,1 @@
+<!-- Love selection-sharer? Please consider supporting our collective: 👉  https://opencollective.com/selection-sharer/donate -->

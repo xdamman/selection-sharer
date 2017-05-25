@@ -4,7 +4,8 @@
   "description": "Medium like popover menu to share on Twitter or by email any text selected on the page",
   "main": "src/share-selection.js",
   "scripts": {
-    "install": "node_modules/grunt-cli/bin/grunt"
+    "install": "node_modules/grunt-cli/bin/grunt",
+    "postinstall": "opencollective postinstall"
   },
   "repository": {
     "type": "git",
@@ -32,5 +33,13 @@
     "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-cssmin": "~0.7.0",
     "grunt-cli": "~0.1.11"
+  },
+  "dependencies": {
+    "opencollective": "^1.0.3"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/selection-sharer",
+    "logo": "https://opencollective.com/opencollective/logo.txt"
   }
 }

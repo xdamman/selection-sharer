@@ -5,6 +5,14 @@
   "main": "dist/selection-sharer.js",
   "scripts": {
     "build": "node_modules/grunt-cli/bin/grunt",
+    "demo:build:webpack": "cp ./dist/selection-sharer.css ./demos/node/webpack/; webpack --config ./demos/node/webpack/webpack.config.js",
+    "demo:build:webpack-css": "webpack --config ./demos/node/webpack/with-css/webpack.config.js",
+    "demo:build:browserify": "cp ./dist/selection-sharer.css ./demos/node/browserify; browserify ./demos/node/browserify/index.js -o ./demos/node/browserify/bundle.js",
+    "demo:clean:webpack": "rm -f ./demos/node/webpack/bundle.js ./demos/node/webpack/selection-sharer.css",
+    "demo:clean:webpack-css": "rm -f ./demos/node/webpack/with-css/bundle.js ./demos/node/webpack/with-css/selection-sharer.css",
+    "demo:clean:browserify": "rm -f ./demos/node/browserify/bundle.js ./demos/node/browserify/selection-sharer.css",
+    "demo": "run-p demo:build:*",
+    "demo:clean": "run-p demo:clean:*",
     "publish": "npm run build",
     "postinstall": "opencollective postinstall"
   },
@@ -33,7 +41,8 @@
     "grunt": "~0.4.2",
     "grunt-cli": "~0.1.11",
     "grunt-contrib-cssmin": "~0.7.0",
-    "grunt-contrib-uglify": "~0.2.7"
+    "grunt-contrib-uglify": "~0.2.7",
+    "npm-run-all": "^4.0.2"
   },
   "dependencies": {
     "opencollective": "^1.0.3"
@@ -45,5 +54,11 @@
     "type": "opencollective",
     "url": "https://opencollective.com/selection-sharer",
     "logo": "https://opencollective.com/opencollective/logo.txt"
+  },
+  "optionalDependencies": {
+    "browserify": "^14.3.0",
+    "css-loader": "^0.28.3",
+    "style-loader": "^0.18.1",
+    "webpack": "^2.6.1"
   }
 }

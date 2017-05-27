@@ -2,9 +2,10 @@
   "name": "share-selection",
   "version": "0.0.15",
   "description": "Medium like popover menu to share on Twitter or by email any text selected on the page",
-  "main": "src/share-selection.js",
+  "main": "dist/selection-sharer.js",
   "scripts": {
-    "install": "node_modules/grunt-cli/bin/grunt",
+    "build": "node_modules/grunt-cli/bin/grunt",
+    "publish": "npm run build",
     "postinstall": "opencollective postinstall"
   },
   "repository": {
@@ -30,12 +31,15 @@
   "homepage": "https://github.com/xdamman/share-selection",
   "devDependencies": {
     "grunt": "~0.4.2",
-    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-cli": "~0.1.11",
     "grunt-contrib-cssmin": "~0.7.0",
-    "grunt-cli": "~0.1.11"
+    "grunt-contrib-uglify": "~0.2.7"
   },
   "dependencies": {
     "opencollective": "^1.0.3"
+  },
+  "peerDependencies": {
+    "jquery": "^3.2.1"
   },
   "collective": {
     "type": "opencollective",

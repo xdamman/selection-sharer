@@ -357,12 +357,13 @@
       };
       return SelectionSharer;
     });
-
-  }
-  else {
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = SelectionSharer;
+  } else {
     // Registering SelectionSharer as a global
     // Usage: var sharer = new SelectionSharer('p');
     window.SelectionSharer = SelectionSharer;
   }
 
 })(jQuery);
+

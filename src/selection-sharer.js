@@ -1,5 +1,5 @@
 /*
- * share-selection: Medium like popover menu to share on Twitter or by email any text selected on the page
+ * selection-sharer: Medium like popover menu to share on Twitter or by email any text selected on the page
  *
  * -- Requires jQuery --
  * -- AMD compatible  --
@@ -357,12 +357,13 @@
       };
       return SelectionSharer;
     });
-
-  }
-  else {
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = SelectionSharer;
+  } else {
     // Registering SelectionSharer as a global
     // Usage: var sharer = new SelectionSharer('p');
     window.SelectionSharer = SelectionSharer;
   }
 
 })(jQuery);
+

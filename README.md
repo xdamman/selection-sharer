@@ -40,12 +40,40 @@ Or more simply:
 
     require(["dist/selection-sharer!"]);
 
+That's it.
 
-That's it. 
+### For Webpack
+__Note__ : This package has a peer dependency on jQuery so it expects jQuery to
+already be available in your page or in your bundling step.
+
+*Without CSS bundling*
+
+```js
+var Selection = require('selection-sharer');
+var selection = new Selection('p');
+```
+
+*With CSS bundling*
+
+```js
+require('selection-sharer/dist/selection-sharer.css');
+var Selection = require('selection-sharer');
+var selection = new Selection('p');
+```
+
+### For Browserify
+
+```js
+var Selection = require('selection-sharer');
+var selection = new Selection('p');
+```
+
+__Note__: Browserify does not do css bundling so you would have to resort to package like
+[browserify-css](https://www.npmjs.com/package/browserify-css)
 
 Please let me know if you install this script on your site. Just star this repo and ping me on Twitter [@xdamman](https://twitter.com/intent/tweet?status=%40xdamman%20Thanks%20for%20http%3A%2F%2Fxdamman.github.io%2Fselection-sharer%20-%20It%20looks%20great%20on%20my%20site:%20). Thank you!
 
-### Notes 
+### Notes
 
 - Images are included inline in the CSS as SVG (perfect for Retina displays, loading time and to easily create new color schemes)
 - Total size gzipped minified: 3.5K (equally split between css and javascript)
@@ -68,7 +96,7 @@ Add a new bookmark to your bookmark bar, edit its url and copy paste the followi
 
 To recompile the minified versions of the css and javascript in the `dist/` directory, simply run:
 
-    npm install
+    npm build
 
 ## Other Builds
 For Ruby On Rails applications you can use selection-sharer gem. We have a gem with selection-sharer js build and it is very easy to use.

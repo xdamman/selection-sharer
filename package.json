@@ -1,5 +1,5 @@
 {
-  "name": "share-selection",
+  "name": "selection-sharer",
   "version": "0.0.15",
   "description": "Medium like popover menu to share on Twitter or by email any text selected on the page",
   "main": "dist/selection-sharer.js",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/xdamman/share-selection.git"
+    "url": "git://github.com/xdamman/selection-sharer.git"
   },
   "keywords": [
     "share",
@@ -34,9 +34,9 @@
   "author": "Xavier Damman (@xdamman)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xdamman/share-selection/issues"
+    "url": "https://github.com/xdamman/selection-sharer/issues"
   },
-  "homepage": "https://github.com/xdamman/share-selection",
+  "homepage": "https://github.com/xdamman/selection-sharer",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-cli": "~0.1.11",

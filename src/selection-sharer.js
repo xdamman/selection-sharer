@@ -1,5 +1,5 @@
 /*
- * share-selection: Medium like popover menu to share on Twitter or by email any text selected on the page
+ * selection-sharer: Medium like popover menu to share on Twitter or by email any text selected on the page
  *
  * -- Requires jQuery --
  * -- AMD compatible  --

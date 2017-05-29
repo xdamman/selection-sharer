@@ -42,7 +42,11 @@
     "grunt-cli": "~0.1.11",
     "grunt-contrib-cssmin": "~0.7.0",
     "grunt-contrib-uglify": "~0.2.7",
-    "npm-run-all": "^4.0.2"
+    "npm-run-all": "^4.0.2",
+    "browserify": "^14.3.0",
+    "css-loader": "^0.28.3",
+    "style-loader": "^0.18.1",
+    "webpack": "^2.6.1"
   },
   "dependencies": {
     "opencollective": "^1.0.3"
@@ -54,11 +58,5 @@
     "type": "opencollective",
     "url": "https://opencollective.com/selection-sharer",
     "logo": "https://opencollective.com/opencollective/logo.txt"
-  },
-  "optionalDependencies": {
-    "browserify": "^14.3.0",
-    "css-loader": "^0.28.3",
-    "style-loader": "^0.18.1",
-    "webpack": "^2.6.1"
   }
 }

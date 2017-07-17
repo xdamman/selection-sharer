@@ -232,6 +232,7 @@
     this.shareFacebook = function(e) {
       e.preventDefault();
       var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
+      text = text.replace(/<\/?[^>]+(>|$)/g, ""); // Remove HTML tags, like <h3>foo</h3>bar => foobar
 
       var url = 'https://www.facebook.com/dialog/feed?' +
                 'app_id='+self.appId +

@@ -15,7 +15,7 @@
   };
 
   var runScript = function() {
-    var sharer = new SelectionSharer();
+    var sharer = new SelectionSharer(); // eslint-disable-line no-undef
     sharer.show();
     sharer.setElements('p');
   };

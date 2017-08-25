@@ -132,10 +132,9 @@
       self.popunder.classList.remove('show');
       if (self.placeholder) self.placeholder.classList.remove('show');
       // We need to push back up all the siblings
+      var el;
       var els = document.getElementsByClassName('moveDown');
-      while ((el = els[0])) {
-        el.classList.remove('moveDown');
-      }
+      while ((el = els[0])) el.classList.remove('moveDown');
 
       // CSS3 transition takes 0.6s
       setTimeout(function() {
@@ -180,7 +179,7 @@
       }, 10);
     };
 
-    this.hide = function(e) {
+    this.hide = function() {
       self.$popover.hide();
     };
 
@@ -254,7 +253,7 @@
 
     this.shareFacebook = function(e) {
       e.preventDefault();
-      var text = self.htmlSelection.replace(/<p[^>]*>/gi, '\n').replace(/<\/p>|  /gi, '').trim();
+      var text = self.htmlSelection.replace(/<p[^>]*>/gi, '\n').replace(/<\/p>| {2}/gi, '').trim();
 
       var url =
         'https://www.facebook.com/dialog/feed?' +
@@ -288,8 +287,8 @@
       );
     };
 
-    this.shareEmail = function(e) {
-      var text = self.textSelection.replace(/<p[^>]*>/gi, '\n').replace(/<\/p>|  /gi, '').trim();
+    this.shareEmail = function() {
+      var text = self.textSelection.replace(/<p[^>]*>/gi, '\n').replace(/<\/p>| {2}/gi, '').trim();
       var email = {};
       email.subject = encodeURIComponent('Quote from ' + document.title);
       email.body =
@@ -350,7 +349,7 @@
       self.$elements = elements instanceof $ ? elements : $(elements);
       self.$elements.mouseup(self.show).mousedown(self.hide).addClass('selectionShareable');
 
-      self.$elements.bind('touchstart', function(e) {
+      self.$elements.bind('touchstart', function() {
         self.isMobile = true;
       });
 
@@ -401,7 +400,7 @@
   //     or require(["selection-sharer"], function(selectionSharer) { var sharer = new SelectionSharer('p'); });
   if (typeof define == 'function') {
     define(function() {
-      SelectionSharer.load = function(name, req, onLoad, config) {
+      SelectionSharer.load = function(name, req, onLoad) {
         var sharer = new SelectionSharer();
         sharer.setElements('p');
         onLoad();

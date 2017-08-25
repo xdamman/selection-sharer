@@ -14,6 +14,10 @@
     "demo": "run-p demo:build:*",
     "demo:clean": "run-p demo:clean:*",
     "publish": "npm run build",
+    "lint:css": "stylelint src/*.css",
+    "lint:js": "eslint ./src",
+    "lint": "run-p lint:*",
+    "prettier": "prettier --single-quote --write --print-width=100 src/*.js",
     "postinstall": "opencollective postinstall"
   },
   "repository": {
@@ -38,11 +42,15 @@
   },
   "homepage": "https://github.com/xdamman/selection-sharer",
   "devDependencies": {
+    "eslint": "^4.5.0",
     "grunt": "~0.4.2",
     "grunt-cli": "~0.1.11",
     "grunt-contrib-cssmin": "~0.7.0",
     "grunt-contrib-uglify": "~0.2.7",
-    "npm-run-all": "^4.0.2"
+    "npm-run-all": "^4.0.2",
+    "prettier": "^1.5.3",
+    "stylelint": "^8.0.0",
+    "stylelint-config-standard": "^17.0.0"
   },
   "dependencies": {
     "opencollective": "^1.0.3"

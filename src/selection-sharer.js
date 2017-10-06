@@ -14,10 +14,32 @@
   var SelectionSharer = function(options) {
 
     var self = this;
+    this.lang = 'en';
+	this.langs={
+		'en':{
+			'shareOn':'Share this selection on %s',
+			'shareByMail':'Share this selection by email',
+			'quoteFrom':"Quote from "
+		},
+		'es':{
+			'shareOn':'Comparte esta selección en %s',
+			'shareByMail':'Comparte esta selección por email',
+			'quoteFrom':"Cite de "
+		},
+		'fr':{
+			'shareOn':'Partagez la sélection sur %s',
+			'shareByMail':'Partagez la sélection par email',
+			'quoteFrom':"Citation de "
 
+		}
+	}
     options = options || {};
     if(typeof options == 'string')
-        options = { elements: options };
+        options = { elements: options	};
+    if(options.lang)
+		this.lang=options.lang;
+    if(options.langs)
+		this.langs=options.langs;
 
     this.sel = null;
     this.textSelection='';
@@ -211,6 +233,14 @@
         return '';
     };
 
+    this.windowOpen = function(url, name){
+      var w = 640, h=440;
+      var left = (screen.width - w) / 2;
+      var top = (screen.height - h) /2 - 100;
+      window.open(url, name, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+      self.hide();		
+	};
+
     this.shareTwitter = function(e) {
       e.preventDefault();
 
@@ -221,10 +251,7 @@
       if(self.viaTwitterAccount && text.length < (120-6-self.viaTwitterAccount.length))
         url += '&via='+self.viaTwitterAccount;
 
-      var w = 640, h=440;
-      var left = (screen.width/2)-(w/2);
-      var top = (screen.height/2)-(h/2)-100;
-      window.open(url, "share_twitter", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+	  self.windowOpen(url, "share_twitter");
       self.hide();
       return false;
     };
@@ -232,39 +259,36 @@
     this.shareFacebook = function(e) {
       e.preventDefault();
       var text = self.htmlSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
-
-      var url = 'https://www.facebook.com/dialog/feed?' +
-                'app_id='+self.appId +
-                '&display=popup'+
-                '&caption='+encodeURIComponent(text)+
-                '&link='+encodeURIComponent(self.url2share)+
-                '&href='+encodeURIComponent(self.url2share)+
-                '&redirect_uri='+encodeURIComponent(self.url2share);
-      var w = 640, h=440;
-      var left = (screen.width/2)-(w/2);
-      var top = (screen.height/2)-(h/2)-100;
-
-      window.open(url, "share_facebook", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+      var encUrl2share = encodeURIComponent(self.url2share);
+      var url = 'https://www.facebook.com/dialog/feed?'+'app_id='+self.appId+'&display=popup'+'&caption='+encodeURIComponent(text)+'&link='+encUrl2share+'&href='+encUrl2share+
+                '&redirect_uri='+encUrl2share;
+      self.windowOpen(url, "share_facebook");
     };
 
     this.shareEmail = function(e) {
       var text = self.textSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
       var email = {};
-      email.subject = encodeURIComponent("Quote from "+document.title);
+      email.subject = encodeURIComponent(salf.translate('quoteFrom')+document.title);
       email.body = encodeURIComponent("“"+text+"”")+"%0D%0A%0D%0AFrom: "+document.title+"%0D%0A"+window.location.href;
       $(this).attr("href","mailto:?subject="+email.subject+"&body="+email.body);
       self.hide();
       return true;
     };
-
+    this.translate = function(varText,Replace){
+		// check for illegal language assignement, if lang is not defined uses english by default
+		if(!self.langs[self.lang]) self.lang = "en";
+		var text=self.langs[self.lang][varText];
+		if (Replace) text=text.replace("%s",Replace);
+		return text;
+	}
     this.render = function() {
+      var liShareTwitter = '      <li><a class="action tweet" href="" title="'+self.translate("shareOn","Twitter")+'" target="_blank">Tweet</a></li>';
+	  var liShareFacebook = '      <li><a class="action facebook" href="" title="'+self.translate("shareOn","Facebook")+'" target="_blank">Facebook</a></li>';
+	  var liShareMail = '      <li><a class="action email" href="" title="'+self.langs[self.lang].shareByMail+'" target="_blank"><svg width="20" height="20"><path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>';
+	  var ulShare = '    <ul>' + liShareTwitter + liShareFacebook + liShareMail + '    </ul>';
       var popoverHTML =  '<div class="selectionSharer" id="selectionSharerPopover" style="position:absolute;">'
                        + '  <div id="selectionSharerPopover-inner">'
-                       + '    <ul>'
-                       + '      <li><a class="action tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
-                       + '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>'
-                       + '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
-                       + '    </ul>'
+                       + ulShare
                        + '  </div>'
                        + '  <div class="selectionSharerPopover-clip"><span class="selectionSharerPopover-arrow"></span></div>'
                        + '</div>';
@@ -272,11 +296,7 @@
       var popunderHTML = '<div id="selectionSharerPopunder" class="selectionSharer">'
                        + '  <div id="selectionSharerPopunder-inner">'
                        + '    <label>Share this selection</label>'
-                       + '    <ul>'
-                       + '      <li><a class="action tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
-                       + '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>'
-                       + '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
-                       + '    </ul>'
+                       + ulShare
                        + '  </div>'
                        + '</div>';
       self.$popover = $(popoverHTML);

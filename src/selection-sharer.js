@@ -302,7 +302,7 @@
       self.$elements = elements instanceof $ ? elements : $(elements);
       self.$elements.mouseup(self.show).mousedown(self.hide).addClass("selectionShareable");
 
-      self.$elements.bind('touchstart', function(e) {
+      self.$elements.on('touchstart', function(e) {
         self.isMobile = true;
       });
 

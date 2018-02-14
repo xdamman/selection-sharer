@@ -251,9 +251,9 @@
       var text = self.textSelection.replace(/<p[^>]*>/ig,'\n').replace(/<\/p>|  /ig,'').trim();
       var email = {};
       email.subject = encodeURIComponent("Quote from "+document.title);
-      email.body = encodeURIComponent("“"+text+"”")+"%0D%0A%0D%0AFrom: "+document.title+"%0D%0A"+window.location.href;
-      $(this).attr("href","mailto:?subject="+email.subject+"&body="+email.body);
-      self.hide();
+      email.body = encodeURIComponent("“"+text+"”")+"%0D%0A%0D%0AFrom: "+encodeURIComponent(document.title)+"%0D%0A"+encodeURIComponent(window.location.href);
+      $(e.target).attr("href","mailto:?subject="+email.subject+"&body="+email.body);
+      self.hide(e);
       return true;
     };
 
@@ -263,7 +263,7 @@
                        + '    <ul>'
                        + '      <li><a class="action tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
                        + '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>'
-                       + '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
+                       + '      <li><a class="action email" href="" title="Share this selection by email"><svg width="20" height="20"><path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
                        + '    </ul>'
                        + '  </div>'
                        + '  <div class="selectionSharerPopover-clip"><span class="selectionSharerPopover-arrow"></span></div>'
@@ -275,21 +275,20 @@
                        + '    <ul>'
                        + '      <li><a class="action tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>'
                        + '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>'
-                       + '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
+                       + '      <li><a class="action email" href="" title="Share this selection by email"><svg width="20" height="20"><path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>'
                        + '    </ul>'
                        + '  </div>'
                        + '</div>';
       self.$popover = $(popoverHTML);
-      self.$popover.find('a.tweet').click(self.shareTwitter);
-      self.$popover.find('a.facebook').click(self.shareFacebook);
-      self.$popover.find('a.email').click(self.shareEmail);
-
+      self.$popover.find('a.tweet').on('click', function(e) { self.shareTwitter(e); });
+      self.$popover.find('a.facebook').on('click', function(e) { self.shareFacebook(e); });
+      self.$popover.find('a.email').on('click', function(e) { self.shareEmail(e); });
       $('body').append(self.$popover);
 
       self.$popunder = $(popunderHTML);
-      self.$popunder.find('a.tweet').click(self.shareTwitter);
-      self.$popunder.find('a.facebook').click(self.shareFacebook);
-      self.$popunder.find('a.email').click(self.shareEmail);
+      self.$popunder.find('a.tweet').on('click', function(e) { self.shareTwitter(e); });
+      self.$popunder.find('a.facebook').on('click', function(e) { self.shareFacebook(e); });
+      self.$popunder.find('a.email').on('click', function(e) { self.shareEmail(e); });
       $('body').append(self.$popunder);
 
       if (self.appId && self.url2share){
@@ -300,11 +299,17 @@
     this.setElements = function(elements) {
       if(typeof elements == 'string') elements = $(elements);
       self.$elements = elements instanceof $ ? elements : $(elements);
-      self.$elements.mouseup(self.show).mousedown(self.hide).addClass("selectionShareable");
-
-      self.$elements.on('touchstart', function(e) {
-        self.isMobile = true;
-      });
+      self.$elements.on({
+        mouseup: function (e) {
+          self.show(e);
+        },
+        mousedown: function(e) {
+            self.hide(e);
+        },
+        touchstart: function(e) {
+          self.isMobile = true;
+        }
+      }).addClass("selectionShareable");
 
       document.onselectionchange = self.selectionChanged;
     };

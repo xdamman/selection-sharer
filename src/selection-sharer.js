@@ -295,14 +295,33 @@
     };
 
     this.shareLinkedIn = function(e) {
-     e.preventDefault();
-     var text = self.htmlSelection.replace(/<p[^>]*>/gi, '\n').replace(/<\/p>| {2}/gi, '').trim();
-     var url = 'https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(self.url2share) + '&title=' + encodeURIComponent(text);
-     var w = 640, h=440;
-     var left = (screen.width/2)-(w/2);
-     var top = (screen.height/2)-(h/2)-100;
-     window.open(url, 'share_linkedin', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-    }
+      e.preventDefault();
+      var text = self.htmlSelection
+        .replace(/<p[^>]*>/gi, '\n')
+        .replace(/<\/p>| {2}/gi, '')
+        .trim();
+      var url =
+        'https://www.linkedin.com/shareArticle?mini=true&url=' +
+        encodeURIComponent(self.url2share) +
+        '&title=' +
+        encodeURIComponent(text);
+      var w = 640,
+        h = 440;
+      var left = screen.width / 2 - w / 2;
+      var top = screen.height / 2 - h / 2 - 100;
+      window.open(
+        url,
+        'share_linkedin',
+        'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' +
+          w +
+          ', height=' +
+          h +
+          ', top=' +
+          top +
+          ', left=' +
+          left
+      );
+    };
 
     this.shareEmail = function() {
       var text = self.textSelection

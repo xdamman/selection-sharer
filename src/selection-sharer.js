@@ -171,7 +171,11 @@
             default:
               return;
           }
-          self.$popover.removeClass('anim').css('top', top + 10).css('left', left).show();
+          self.$popover
+            .removeClass('anim')
+            .css('top', top + 10)
+            .css('left', left)
+            .show();
           setTimeout(function() {
             self.$popover.addClass('anim').css('top', top);
           }, 0);
@@ -253,7 +257,10 @@
 
     this.shareFacebook = function(e) {
       e.preventDefault();
-      var text = self.htmlSelection.replace(/<p[^>]*>/gi, '\n').replace(/<\/p>| {2}/gi, '').trim();
+      var text = self.htmlSelection
+        .replace(/<p[^>]*>/gi, '\n')
+        .replace(/<\/p>| {2}/gi, '')
+        .trim();
 
       var url =
         'https://www.facebook.com/dialog/feed?' +
@@ -288,7 +295,10 @@
     };
 
     this.shareEmail = function() {
-      var text = self.textSelection.replace(/<p[^>]*>/gi, '\n').replace(/<\/p>| {2}/gi, '').trim();
+      var text = self.textSelection
+        .replace(/<p[^>]*>/gi, '\n')
+        .replace(/<\/p>| {2}/gi, '')
+        .trim();
       var email = {};
       email.subject = encodeURIComponent('Quote from ' + document.title);
       email.body =
@@ -347,7 +357,10 @@
     this.setElements = function(elements) {
       if (typeof elements == 'string') elements = $(elements);
       self.$elements = elements instanceof $ ? elements : $(elements);
-      self.$elements.mouseup(self.show).mousedown(self.hide).addClass('selectionShareable');
+      self.$elements
+        .mouseup(self.show)
+        .mousedown(self.hide)
+        .addClass('selectionShareable');
 
       self.$elements.bind('touchstart', function() {
         self.isMobile = true;
@@ -373,10 +386,14 @@
 
       var x = supportPageOffset
         ? window.pageXOffset
-        : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft;
+        : isCSS1Compat
+        ? document.documentElement.scrollLeft
+        : document.body.scrollLeft;
       var y = supportPageOffset
         ? window.pageYOffset
-        : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+        : isCSS1Compat
+        ? document.documentElement.scrollTop
+        : document.body.scrollTop;
       return { x: x, y: y };
     };
 
@@ -415,4 +432,3 @@
     window.SelectionSharer = SelectionSharer;
   }
 })(jQuery);
-

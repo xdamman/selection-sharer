@@ -10,30 +10,34 @@
  */
 
 @keyframes selectionSharerPopover-animation {
-  0%{
-  transform:matrix(0.97,0,0,1,0,12);
-  filter:alpha(opacity=0);
-  opacity:0
+  0% {
+    transform: matrix(0.97, 0, 0, 1, 0, 12);
+    filter: alpha(opacity=0);
+    opacity: 0;
   }
-  20%{
-  transform:matrix(0.99,0,0,1,0,2);
-  filter:alpha(opacity=70);
-  opacity:.7
+
+  20% {
+    transform: matrix(0.99, 0, 0, 1, 0, 2);
+    filter: alpha(opacity=70);
+    opacity: 0.7;
   }
-  40%{
-  transform:matrix(1,0,0,1,0,-1);
-  filter:alpha(opacity=100);
-  opacity:1
+
+  40% {
+    transform: matrix(1, 0, 0, 1, 0, -1);
+    filter: alpha(opacity=100);
+    opacity: 1;
   }
-  70%{
-  transform:matrix(1,0,0,1,0,0);
-  filter:alpha(opacity=100);
-  opacity:1
+
+  70% {
+    transform: matrix(1, 0, 0, 1, 0, 0);
+    filter: alpha(opacity=100);
+    opacity: 1;
   }
-  100%{
-  transform:matrix(1,0,0,1,0,0);
-  filter:alpha(opacity=100);
-  opacity:1
+
+  100% {
+    transform: matrix(1, 0, 0, 1, 0, 0);
+    filter: alpha(opacity=100);
+    opacity: 1;
   }
 }
 
@@ -45,7 +49,7 @@
   z-index: 1010;
 }
 
-#selectionSharerPopover:after {
+#selectionSharerPopover::after {
   content: '';
   display: block;
   position: absolute;
@@ -61,20 +65,20 @@
 }
 
 #selectionSharerPopover.anim {
-  transition: top .075s ease-out;
+  transition: top 0.075s ease-out;
   animation: selectionSharerPopover-animation 180ms forwards linear;
   -webkit-animation: selectionSharerPopover-animation 180ms forwards linear;
 }
 
 #selectionSharerPopover-inner {
-  position:relative;
+  position: relative;
   overflow: hidden;
   -webkit-border-radius: 5px;
   border-radius: 5px;
   border: 1px solid;
   border-color: #262625 #1c1c1b #121211;
-  box-shadow: 0 1px 3px -1px rgba(0,0,0,0.7),inset 0 0 1px rgba(255,255,255,0.07),inset 0 0 2px rgba(255,255,255,0.15);
-  background: linear-gradient(to bottom,rgba(49,49,47,0.97),#262625);
+  box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.7), inset 0 0 1px rgba(255, 255, 255, 0.07), inset 0 0 2px rgba(255, 255, 255, 0.15);
+  background-image: linear-gradient(to bottom, rgba(49, 49, 47, 0.97), #262625);
   background-repeat: repeat-x;
 }
 
@@ -98,9 +102,8 @@
   transform: rotate(45deg) scale(0.5);
   background-color: #454543;
   border: 2px solid #121211;
-  box-sizing:content-box;
+  box-sizing: content-box;
 }
-
 
 .selectionSharer ul {
   padding: 0;
@@ -115,10 +118,10 @@
 }
 
 .selectionSharer a.action {
-  display:block;
+  display: block;
   text-indent: -200px;
   margin: 5px 7px;
-  width:20px;
+  width: 20px;
   height: 20px;
   border: none;
 }
@@ -136,23 +139,28 @@
 .selectionSharer a.facebook {
   background: url("data:image/svg+xml;charset=utf8,%3csvg viewBox='0 0 33 33' width='25' height='25' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cg%3e%3cpath style='fill:white' d='M 17.996,32L 12,32 L 12,16 l-4,0 l0-5.514 l 4-0.002l-0.006-3.248C 11.993,2.737, 13.213,0, 18.512,0l 4.412,0 l0,5.515 l-2.757,0 c-2.063,0-2.163,0.77-2.163,2.209l-0.008,2.76l 4.959,0 l-0.585,5.514L 18,16L 17.996,32z'%3e%3c/path%3e%3c/g%3e%3c/svg%3e") no-repeat;
   background-size: 18px;
-  background-position: 0px 2px;
-  display:none;
+  background-position: 0 2px;
+  display: none;
+}
+
+.selectionSharer a.linkedin {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="300px" height="300px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve"><g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)"><path fill="white" d="M343.999,2812.002C222.998,2770,155,2672.002,155,2540c0-62.002,5-85,27.998-132.998 c108.003-219.004,459.004-206.001,560,21.997c16.001,36.001,18.003,60,15,125c-5,97.002-27.998,146.001-91.997,203.003 C586.001,2827.002,453.999,2850,343.999,2812.002z"/> <path fill="white" d="M2035.996,2052.998c-150.996-31.997-257.998-92.998-365-210l-68.994-75l-7.002,79.004 c-5,42.998-10.996,100.996-14.004,127.998l-5.996,50l-253.999,2.998L1067.998,2030l6.001-62.002c3.003-35,8.999-452.998,12.002-930 L1092.998,170h288.003H1670l2.002,597.998C1675,1365,1675,1365,1697.998,1410.996c34.004,70,87.002,125.005,150,156.006 c75,36.997,192.998,38.999,257.998,5c59.004-31.001,111.006-95,137.002-172.002c21.006-64.004,22.002-77.002,25-647.002 L2270.996,170h290h290l-3.994,642.998c-2.998,547.998-6.006,652.002-20,707.002c-42.998,172.998-97.002,280-187.998,371.001 C2494.004,2037.998,2257.002,2101.001,2035.996,2052.998z"/><path fill="white" d="M167.002,2022.998c-4.004-2.998-7.002-421.997-7.002-930V170h295h295l-2.002,927.998L745,2025 l-286.001,2.998C302.002,2028.999,171.001,2027.002,167.002,2022.998z"/></g></svg>') 2px 4px/18px no-repeat;
+  background-size: 18px;
+  background-position: 0 2px;
 }
 
 .selectionSharer a.email {
   background: url("data:image/svg+xml;charset=utf8,%3csvg xmlns='http://www.w3.org/2000/svg' width='94' height='64'%3e%3cg transform='translate(-10, -10)' fill='transparent'%3e%3crect x='0' y='0' width='114' height='114'%3e%3c/rect%3e%3cpath d='M12,12 L102,12 L102,72 L12,72 L12,12 Z M16,12 L53,49 C55.6666667,51 58.3333333,51 61,49 L98,12 L16,12 Z M15,72 L45,42 L15,72 Z M69,42 L99,72 L69,42 Z' stroke='white' stroke-width='5'%3e%3c/path%3e%3c/g%3e%3c/svg%3e") no-repeat;
   background-size: 20px;
-  background-position: 0px 4px;
+  background-position: 0 4px;
 }
-
 
 #selectionSharerPopunder.fixed {
   transition: bottom 0.5s ease-in-out;
   width: 100%;
   position: fixed;
   left: 0;
-  bottom:-50px;
+  bottom: -50px;
 }
 
 .selectionSharer {
@@ -160,18 +168,18 @@
 }
 
 .selectionSharer.moveDown {
-  -webkit-transform: translate3d(0,60px,0);
+  -webkit-transform: translate3d(0, 60px, 0);
 }
 
 #selectionSharerPopunder {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 0px;
+  height: 0;
   transition: height 0.5s ease-in-out;
   background: #ccc;
   border: none;
-  box-shadow: inset 0px 10px 5px -10px rgba(0,0,0,0.5), inset 0px -10px 5px -10px rgba(0,0,0,0.5);
+  box-shadow: inset 0 10px 5px -10px rgba(0, 0, 0, 0.5), inset 0 -10px 5px -10px rgba(0, 0, 0, 0.5);
   border-radius: 0;
   overflow: hidden;
 }
@@ -192,8 +200,8 @@
 
 #selectionSharerPopunder-inner ul {
   overflow: hidden;
-  float:right;
-  margin: 0px;
+  float: right;
+  margin: 0;
 }
 
 #selectionSharerPopunder-inner ul li {
@@ -205,7 +213,7 @@
   color: white;
   font-weight: 300;
   line-height: 50px;
-  margin: 0px 20px 0px 10px;
+  margin: 0 20px 0 10px;
 }
 
 #selectionSharerPopunder-inner a {
@@ -215,5 +223,5 @@
 }
 
 #selectionSharerPopunder-inner a.tweet {
-  background-position: 0px 2px;
+  background-position: 0 2px;
 }

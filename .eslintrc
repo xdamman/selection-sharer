@@ -1,0 +1,17 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "es6": false,
+    "browser": true,
+    "jquery": true,
+    "node": true,
+    "amd": true
+  },
+  "rules": {
+    "quotes": ["error", "single"],
+    "prefer-const": "off",
+    "no-var": "off",
+    "perfer-template": "off"
+  }
+
+}

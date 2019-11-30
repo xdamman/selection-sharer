@@ -206,8 +206,8 @@
 
 #selectionSharerPopunder-inner ul {
   overflow: hidden;
-  float: right;
   margin: 0;
+  display: inline;
 }
 
 #selectionSharerPopunder-inner ul li {

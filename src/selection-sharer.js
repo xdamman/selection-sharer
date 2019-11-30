@@ -418,17 +418,16 @@
       var popoverHTML =
         '<div class="selectionSharer" id="selectionSharerPopover" style="position:absolute;">' +
         '  <div id="selectionSharerPopover-inner">' +
-        shareIcons;
-      '  <div class="selectionSharerPopover-clip"><span class="selectionSharerPopover-arrow"></span></div>' +
+        shareIcons +
+        '  <div class="selectionSharerPopover-clip"><span class="selectionSharerPopover-arrow"></span></div>' +
         '</div>';
 
       var popunderHTML =
         '<div id="selectionSharerPopunder" class="selectionSharer">' +
         '  <div id="selectionSharerPopunder-inner">' +
-        '    <label>Share this selection</label>' +
-        '    <ul>' +
-        shareIcons;
-      '    </ul>' + '  </div>' + '</div>';
+        shareIcons +
+        '  </div>' +
+        '</div>';
       self.$popover = $(popoverHTML);
       self.$popunder = $(popunderHTML);
 

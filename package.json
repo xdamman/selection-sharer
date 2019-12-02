@@ -12,12 +12,13 @@
     "demo:clean:webpack-css": "rm -f ./demos/node/webpack/with-css/bundle.js ./demos/node/webpack/with-css/selection-sharer.css",
     "demo:clean:browserify": "rm -f ./demos/node/browserify/bundle.js ./demos/node/browserify/selection-sharer.css",
     "demo": "run-p demo:build:*",
+    "build-demo": "run-s build demo",
     "demo:clean": "run-p demo:clean:*",
     "publish": "npm run build",
     "lint:css": "stylelint src/*.css",
     "lint:js": "eslint ./src",
     "lint": "run-p lint:*",
-    "prettier": "prettier --single-quote --write --print-width=100 src/*.js",
+    "prettier": "prettier --write",
     "postinstall": "opencollective postinstall"
   },
   "repository": {
@@ -48,8 +49,7 @@
     "grunt-contrib-cssmin": "~0.7.0",
     "grunt-contrib-uglify": "~0.2.7",
     "npm-run-all": "^4.0.2",
-    "prettier": "^1.5.3",
-    "shared-git-hooks": "^1.2.1",
+    "prettier": "^1.19.1",
     "stylelint": "^8.0.0",
     "stylelint-config-standard": "^17.0.0"
   },

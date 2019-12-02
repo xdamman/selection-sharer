@@ -10,15 +10,35 @@
  */
 
 (function($) {
+  function attachClickHandlers(parentElement, handlers) {
+    if (handlers && handlers.length < 0) {
+      return;
+    }
+
+    handlers.forEach(function(h) {
+      parentElement.find(h.query).click(h.action);
+    });
+  }
+
+  function swapParaWithNewline(string) {
+    return string
+      .replace(/<p[^>]*>/gi, '\n')
+      .replace(/<\/p>| {2}/gi, '')
+      .trim();
+  }
+
   var SelectionSharer = function(options) {
     var self = this;
 
     options = options || {};
-    if (typeof options == 'string') options = { elements: options };
+    if (typeof options == 'string') {
+      options = { elements: options };
+    }
 
     this.sel = null;
     this.textSelection = '';
     this.htmlSelection = '';
+    this.optionalShare = ['telegram'];
 
     this.appId =
       $('meta[property="fb:app_id"]').attr('content') ||
@@ -257,11 +277,7 @@
 
     this.shareFacebook = function(e) {
       e.preventDefault();
-      var text = self.htmlSelection
-        .replace(/<p[^>]*>/gi, '\n')
-        .replace(/<\/p>| {2}/gi, '')
-        .trim();
-
+      var text = swapParaWithNewline(self.htmlSelection);
       var url =
         'https://www.facebook.com/dialog/feed?' +
         'app_id=' +
@@ -296,10 +312,7 @@
 
     this.shareLinkedIn = function(e) {
       e.preventDefault();
-      var text = self.htmlSelection
-        .replace(/<p[^>]*>/gi, '\n')
-        .replace(/<\/p>| {2}/gi, '')
-        .trim();
+      var text = swapParaWithNewline(self.htmlSelection);
       var url =
         'https://www.linkedin.com/shareArticle?mini=true&url=' +
         encodeURIComponent(self.url2share) +
@@ -323,11 +336,35 @@
       );
     };
 
+    this.shareTelegram = function(e) {
+      e.preventDefault();
+      var text = swapParaWithNewline(self.htmlSelection);
+      var url =
+        'https://www.telegram.me/share/share/?url=' +
+        encodeURIComponent(self.url2share) +
+        '&text=' +
+        encodeURIComponent(text);
+
+      var w = 640,
+        h = 440;
+      var left = screen.width / 2 - w / 2;
+      var top = screen.height / 2 - h / 2 - 100;
+      window.open(
+        url,
+        'share_telegram',
+        'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' +
+          w +
+          ', height=' +
+          h +
+          ', top=' +
+          top +
+          ', left=' +
+          left
+      );
+    };
+
     this.shareEmail = function() {
-      var text = self.textSelection
-        .replace(/<p[^>]*>/gi, '\n')
-        .replace(/<\/p>| {2}/gi, '')
-        .trim();
+      var text = swapParaWithNewline(self.textSelection);
       var email = {};
       email.subject = encodeURIComponent('Quote from ' + document.title);
       email.body =
@@ -342,48 +379,103 @@
     };
 
     this.render = function() {
-      var popoverHTML =
-        '<div class="selectionSharer" id="selectionSharerPopover" style="position:absolute;">' +
-        '  <div id="selectionSharerPopover-inner">' +
+      var getIconHTML = function(name) {
+        var nameCapitalized = name.charAt(0).toUpperCase() + name.substring(1);
+        return (
+          '<li><a class="action ' +
+          name +
+          '" href="" title="Share this selection on ' +
+          nameCapitalized +
+          '" target="_blank">' +
+          nameCapitalized +
+          '</a></li>'
+        );
+      };
+      var shareServices = {
+        telegram: {
+          icon: getIconHTML('telegram'),
+          query: 'a.telegram',
+          action: this.shareTelegram,
+        },
+      };
+      var pickedServices = this.optionalShare.map(function(s) {
+        return shareServices[s];
+      });
+
+      var pickedShareIcons = pickedServices.reduce(function(acc, p) {
+        return acc.concat(p.icon).concat('\n');
+      }, '');
+      var shareIcons =
         '    <ul>' +
         '      <li><a class="action tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>' +
         '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>' +
         '      <li><a class="action linkedin" href="" title="Share this selection on LinkedIn" target="_blank">LinkedIn</a></li>' +
+        pickedShareIcons +
         '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>' +
         '    </ul>' +
-        '  </div>' +
+        '  </div>';
+
+      var popoverHTML =
+        '<div class="selectionSharer" id="selectionSharerPopover" style="position:absolute;">' +
+        '  <div id="selectionSharerPopover-inner">' +
+        shareIcons +
         '  <div class="selectionSharerPopover-clip"><span class="selectionSharerPopover-arrow"></span></div>' +
         '</div>';
 
       var popunderHTML =
         '<div id="selectionSharerPopunder" class="selectionSharer">' +
         '  <div id="selectionSharerPopunder-inner">' +
-        '    <label>Share this selection</label>' +
-        '    <ul>' +
-        '      <li><a class="action tweet" href="" title="Share this selection on Twitter" target="_blank">Tweet</a></li>' +
-        '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>' +
-        '      <li><a class="action linkedin" href="" title="Share this selection on LinkedIn" target="_blank">LinkedIn</a></li>' +
-        '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>' +
-        '    </ul>' +
+        shareIcons +
         '  </div>' +
         '</div>';
       self.$popover = $(popoverHTML);
-      self.$popover.find('a.tweet').click(self.shareTwitter);
-      self.$popover.find('a.facebook').click(self.shareFacebook);
-      self.$popover.find('a.linkedin').click(self.shareLinkedIn);
-      self.$popover.find('a.email').click(self.shareEmail);
-      $('body').append(self.$popover);
-
       self.$popunder = $(popunderHTML);
-      self.$popunder.find('a.tweet').click(self.shareTwitter);
-      self.$popunder.find('a.facebook').click(self.shareFacebook);
-      self.$popover.find('a.linkedin').click(self.shareLinkedIn);
-      self.$popunder.find('a.email').click(self.shareEmail);
+
+      var pickedHandlers = pickedServices.map(function(p) {
+        return {
+          query: p.query,
+          action: p.action,
+        };
+      });
+
+      self.attachHandlers(
+        [self.$popover, self.$popunder],
+        [
+          {
+            query: 'a.tweet',
+            action: self.shareTwitter,
+          },
+          {
+            query: 'a.facebook',
+            action: self.shareFacebook,
+          },
+          {
+            query: 'a.linkedin',
+            action: self.shareLinkedIn,
+          },
+          {
+            query: 'a.email',
+            action: self.shareEmail,
+          },
+        ].concat(pickedHandlers)
+      );
+
+      $('body').append(self.$popover);
       $('body').append(self.$popunder);
 
       if (self.appId && self.url2share) {
         $('.selectionSharer a.facebook').css('display', 'inline-block');
       }
+    };
+
+    this.attachHandlers = function(parents, queryHandlers) {
+      if (parents && parents.length < 0) {
+        return;
+      }
+
+      parents.forEach(function(p) {
+        attachClickHandlers(p, queryHandlers);
+      });
     };
 
     this.setElements = function(elements) {
@@ -439,7 +531,8 @@
   // jQuery plugin
   // Usage: $( "p" ).selectionSharer();
   $.fn.selectionSharer = function() {
-    var sharer = new SelectionSharer();
+    var args = arguments;
+    var sharer = new SelectionSharer.apply(null, args);
     sharer.setElements(this);
     return this;
   };

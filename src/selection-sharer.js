@@ -27,6 +27,18 @@
       .trim();
   }
 
+  function getURL2Share() {
+    var ogpURL =
+      $('meta[property="og:url"]').attr('content') || $('meta[property="og:url"]').attr('value');
+    var currLocation = window.location.href;
+
+    if (currLocation !== ogpURL) {
+      return currLocation;
+    }
+
+    return ogpURL;
+  }
+
   var SelectionSharer = function(options) {
     var self = this;
 
@@ -39,14 +51,15 @@
     this.textSelection = '';
     this.htmlSelection = '';
     this.optionalShare = ['telegram'];
+    this.url2share = getURL2Share();
 
     this.appId =
       $('meta[property="fb:app_id"]').attr('content') ||
       $('meta[property="fb:app_id"]').attr('value');
-    this.url2share =
-      $('meta[property="og:url"]').attr('content') ||
-      $('meta[property="og:url"]').attr('value') ||
-      window.location.href;
+
+    this.updateURL2Share = function() {
+      this.url2share = getURL2Share();
+    };
 
     this.getSelectionText = function(sel) {
       var html = '',
@@ -164,6 +177,7 @@
     };
 
     this.show = function(e) {
+      this.updateURL2Share();
       setTimeout(function() {
         var sel = window.getSelection();
         var selection = self.getSelectionText(sel);
@@ -482,7 +496,7 @@
       if (typeof elements == 'string') elements = $(elements);
       self.$elements = elements instanceof $ ? elements : $(elements);
       self.$elements
-        .mouseup(self.show)
+        .mouseup(self.show.bind(this))
         .mousedown(self.hide)
         .addClass('selectionShareable');
 

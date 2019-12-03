@@ -545,8 +545,7 @@
   // jQuery plugin
   // Usage: $( "p" ).selectionSharer();
   $.fn.selectionSharer = function() {
-    var args = arguments;
-    var sharer = new SelectionSharer.apply(null, args);
+    var sharer = new SelectionSharer();
     sharer.setElements(this);
     return this;
   };

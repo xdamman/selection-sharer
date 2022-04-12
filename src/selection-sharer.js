@@ -425,7 +425,7 @@
         '      <li><a class="action facebook" href="" title="Share this selection on Facebook" target="_blank">Facebook</a></li>' +
         '      <li><a class="action linkedin" href="" title="Share this selection on LinkedIn" target="_blank">LinkedIn</a></li>' +
         pickedShareIcons +
-        '      <li><a class="action email" href="" title="Share this selection by email" target="_blank"><svg width="20" height="20"><path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>' +
+        '      <li><a class="action email" href="" title="Share this selection by email" aria-label="Share this selection by email" target="_blank"><svg width="20" height="20">Email<path stroke="%23FFF" stroke-width="6" d="m16,25h82v60H16zl37,37q4,3 8,0l37-37M16,85l30-30m22,0 30,30"/></svg></a></li>' +
         '    </ul>' +
         '  </div>';
 
